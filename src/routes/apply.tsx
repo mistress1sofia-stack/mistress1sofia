@@ -4,6 +4,7 @@ import { saveSubmission } from "@/lib/submit";
 import { Confirmation, ConsentCheckbox, Field, makeRef, NavButtons, PaymentPicker, PrivacyNote, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
 
 export const Route = createFileRoute("/apply")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Apply for Consideration — Mistress Sofia" },

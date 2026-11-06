@@ -4,6 +4,7 @@ import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
 const portrait = portraitAsset.url;
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Mistress Sofia — Professional Dominatrix" },
