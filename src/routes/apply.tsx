@@ -15,7 +15,8 @@ export const Route = createFileRoute("/apply")({
 });
 
 const STEPS = ["Introduction", "Personal Details", "Physical", "Background", "Tribute", "Commitment"];
-type F = Record<string, string>;
+type F = Partial<Record<"name"|"pet"|"email"|"phone"|"age"|"location"|"city"|"sex"|"marital"|"orientation"|"height"|"weight"|"chest"|"waist"|"hips"|"children"|"education"|"occupation"|"religion"|"convDetail"|"amount"|"code"|"why"|"obey"|"ack"|"pay"|"type"|"duration"|"customHours"|"venue"|"travel"|"dates"|"platform"|"experience"|"dungeon"|"hard"|"soft"|"medical", string>>;
+type K = keyof F;
 
 function Apply() {
   const [step, setStep] = useState(0);
@@ -27,11 +28,11 @@ function Apply() {
   const [err, setErr] = useState<F>({});
   const [refId, setRefId] = useState<string | null>(null);
 
-  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
-  const inp = (k: string, label: string, type = "text") => (
+  const set = (k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
+  const inp = (k: K, label: string, type = "text") => (
     <Field label={label} error={err[k]}><input type={type} className="field" value={f[k] ?? ""} onChange={set(k)} /></Field>
   );
-  const sel = (k: string, label: string, opts: string[]) => (
+  const sel = (k: K, label: string, opts: string[]) => (
     <Field label={label} error={err[k]}>
       <select className="field" value={f[k] ?? ""} onChange={set(k)}>
         <option value="">Select…</option>
@@ -42,7 +43,7 @@ function Apply() {
 
   function validate() {
     const e: F = {};
-    const req = (k: string) => { if (!f[k]?.trim()) e[k] = "Required"; };
+    const req = (k: K) => { if (!f[k]?.trim()) e[k] = "Required"; };
     if (step === 1) {
       ["name", "email", "phone", "age", "city", "sex"].forEach(req);
       if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email";

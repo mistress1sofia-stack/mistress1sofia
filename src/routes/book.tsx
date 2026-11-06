@@ -17,7 +17,8 @@ export const Route = createFileRoute("/book")({
 
 const STEPS = ["Protocol", "Client Profile", "Session", "Venue & Logistics", "Limits", "Deposit"];
 const ACTIVITIES = ["Bondage & restraint", "Foot, shoe & boot worship", "Flogging & caning", "Humiliation", "Chastity & orgasm control", "Feminization", "Wax & ice play", "Electric stimulation", "Sensory deprivation", "CBT", "Trampling", "Role play"];
-type F = Record<string, string>;
+type F = Partial<Record<"name"|"pet"|"email"|"phone"|"age"|"location"|"city"|"sex"|"marital"|"orientation"|"height"|"weight"|"chest"|"waist"|"hips"|"children"|"education"|"occupation"|"religion"|"convDetail"|"amount"|"code"|"why"|"obey"|"ack"|"pay"|"type"|"duration"|"customHours"|"venue"|"travel"|"dates"|"platform"|"experience"|"dungeon"|"hard"|"soft"|"medical", string>>;
+type K = keyof F;
 
 function Book() {
   const [step, setStep] = useState(0);
@@ -30,14 +31,14 @@ function Book() {
   const price = sessionPrice(f.duration as never, Number(f.customHours) || 0);
   const deposit = Math.round(price / 2);
 
-  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
-  const inp = (k: string, label: string, type = "text") => (
+  const set = (k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
+  const inp = (k: K, label: string, type = "text") => (
     <Field label={label} error={err[k]}><input type={type} className="field" value={f[k] ?? ""} onChange={set(k)} /></Field>
   );
-  const area = (k: string, label: string) => (
+  const area = (k: K, label: string) => (
     <Field label={label} error={err[k]}><textarea rows={3} className="field" value={f[k] ?? ""} onChange={set(k)} /></Field>
   );
-  const choice = (k: string, opts: string[]) => (
+  const choice = (k: K, opts: string[]) => (
     <div className="flex flex-wrap gap-3">
       {opts.map((o) => (
         <button type="button" key={o} onClick={() => setF({ ...f, [k]: o })}
@@ -50,7 +51,7 @@ function Book() {
 
   function validate() {
     const e: F = {};
-    const req = (k: string) => { if (!f[k]?.trim()) e[k] = "Required"; };
+    const req = (k: K) => { if (!f[k]?.trim()) e[k] = "Required"; };
     if (step === 1) {
       ["name", "email", "phone", "age", "location"].forEach(req);
       if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email";
