@@ -12,5 +12,3 @@ Allow: /
 
 User-agent: *
 Allow: /
-
-Sitemap: https://mistress-sofia-com.lovable.app/sitemap.xml

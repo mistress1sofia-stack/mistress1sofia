@@ -6,7 +6,6 @@ import { lovable } from '@/integrations/lovable/index';
 import { Button } from '@/components/ui/button';
 import { OWNER_EMAIL } from '@/lib/inbox';
 export const Route = createFileRoute('/auth')({
-  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: 'Owner Sign In — Mistress Sofia' },
     { name: 'description', content: 'Private owner access to the request inbox.' },

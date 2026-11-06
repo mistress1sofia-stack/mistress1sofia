@@ -32,4 +32,3 @@ use the editor.
 - Private inbox reads and review updates use authenticated clients and database role policies; never rely on an email check in the browser for authorization.
 - Owner roles are assigned only by an Auth confirmation trigger using the verified owner identity; users cannot edit their own roles.
 - App emails use managed sending only after sender-domain setup; do not create email queues or email tables.
-- Derive the sitemap from required route-level staticData.sitemap decisions; exclude private subtrees so new pages cannot silently expose owner surfaces.

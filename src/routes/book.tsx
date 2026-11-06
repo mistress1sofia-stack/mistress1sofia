@@ -5,7 +5,6 @@ import { Confirmation, ConsentCheckbox, Field, makeRef, NavButtons, PaymentPicke
 import { sessionPrice, CUSTOM_HOURLY } from "@/lib/pricing";
 
 export const Route = createFileRoute("/book")({
-  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Book a Session — Mistress Sofia" },
