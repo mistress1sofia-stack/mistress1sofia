@@ -71,7 +71,7 @@ function Book() {
     if (step === STEPS.length - 1) {
       const ref = makeRef("MS-BKG");
       setSending(true);
-      saveSubmission("booking_requests", ref, { ...f, pay })
+      saveSubmission("booking_requests", ref, { ...f, pay, activities: acts })
         .then(() => { setRefId(ref); window.scrollTo(0, 0); })
         .catch(() => alert("Submission failed. Please try again."))
         .finally(() => setSending(false));
