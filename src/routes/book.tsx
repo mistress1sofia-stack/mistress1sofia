@@ -102,7 +102,7 @@ function Book() {
                   <span className="mb-3 block text-[0.65rem] uppercase tracking-[0.25em] text-gold">Duration</span>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {[["1h", "1 Hour", "£140"], ["1.5h", "1.5 Hours", "£200"], ["overnight", "Overnight", "£600"], ["custom", "Custom Hours", `£${CUSTOM_HOURLY}/hr`]].map(([id, l, p]) => (
-                      <button type="button" key={id} onClick={() => setF({ ...f, duration: id })}
+                      <button type="button" key={id} onClick={() => setF({ ...f, duration: id ?? "1h" })}
                         className={`flex justify-between border px-4 py-3 text-sm transition ${f.duration === id ? "border-crimson bg-oxblood/40 shadow-[var(--glow-crimson)]" : "border-input hover:border-gold-soft"}`}>
                         <span>{l}</span><span className="text-gold">{p}</span>
                       </button>

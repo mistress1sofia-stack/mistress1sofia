@@ -93,7 +93,7 @@ export function PaymentPicker({
   );
 }
 
-export function NavButtons({ step, last, onBack, onNext, nextLabel }: { step: number; last: boolean; onBack: () => void; onNext: () => void; nextLabel?: string }) {
+export function NavButtons({ step, last, onBack, onNext, nextLabel }: { step: number; last: boolean; onBack: () => void; onNext: () => void; nextLabel?: string | undefined }) {
   return (
     <div className="mt-10 flex items-center justify-between gap-4">
       <button type="button" className="btn-gold" onClick={onBack} disabled={step === 0} style={{ visibility: step === 0 ? "hidden" : "visible" }}>
