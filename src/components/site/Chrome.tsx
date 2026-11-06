@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
@@ -49,12 +50,10 @@ export function Header() {
 }
 
 export function Footer() {
-  const [signedIn, setSignedIn] = useState(false);
-  useEffect(() => {
-    void supabase.auth.getUser().then(({ data }) => setSignedIn(Boolean(data.user)));
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => setSignedIn(Boolean(session)));
-    return () => data.subscription.unsubscribe();
-  }, []);
+  const { data: signedIn } = useQuery({ queryKey: ['current-user'], queryFn: async () => {
+    const { data } = await supabase.auth.getUser();
+    return Boolean(data.user);
+  } });
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-3">
