@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Private inbox reads and review updates use authenticated clients and database role policies; never rely on an email check in the browser for authorization.
+- Owner roles are assigned only by an Auth confirmation trigger using the verified owner identity; users cannot edit their own roles.
+- App emails use managed sending only after sender-domain setup; do not create email queues or email tables.
