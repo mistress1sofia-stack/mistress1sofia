@@ -30,7 +30,13 @@ export function Header() {
           </Link>
           <Link to="/book" className="btn-crimson !px-5 !py-2.5">Book Session</Link>
         </nav>
-        <button className="lg:hidden text-gold text-xs tracking-[0.3em] uppercase" onClick={() => setOpen(!open)} aria-label="Menu">
+        <button
+          className="lg:hidden text-gold text-xs tracking-[0.3em] uppercase"
+          onClick={() => setOpen(!open)}
+          onKeyDown={(e) => { if (e.key === "Escape") setOpen(false); }}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
           {open ? "Close" : "Menu"}
         </button>
       </div>
@@ -69,7 +75,7 @@ export function Footer() {
         </div>
         <div className="text-xs leading-relaxed text-muted-foreground">
           <p>Strictly 18+ adults only. All interactions are consensual, negotiated in advance, and conducted between adults.</p>
-          <p className="mt-3">All correspondence is handled with encrypted, absolute discretion. Your privacy is protocol.</p>
+          <p className="mt-3">Submissions are stored privately and reviewed only by Mistress Sofia. You may request deletion of your data at any time.</p>
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">

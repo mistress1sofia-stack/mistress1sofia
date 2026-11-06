@@ -61,7 +61,7 @@ function Index() {
           <div className="relative order-1 lg:order-2">
             <div className="absolute -inset-3 border border-gold-soft/40" />
             <div className="relative aspect-[7/10] overflow-hidden">
-              <img src={portrait} alt="Mistress Sofia seated on a velvet throne" width={1080} height={1550} className="h-full w-full object-cover" />
+              <img src={portrait} alt="Portrait of Mistress Sofia in a black gown and cap, holding a wooden cane" width={1080} height={1550} className="h-full w-full object-cover" />
               <div className="vignette absolute inset-0" />
             </div>
           </div>
@@ -125,11 +125,11 @@ function Index() {
           <div className="mt-12 border-t border-border">
             {faqs.map((f, i) => (
               <div key={f.q} className="border-b border-border">
-                <button className="flex w-full items-center justify-between gap-6 py-6 text-left" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                <button className="flex w-full items-center justify-between gap-6 py-6 text-left" aria-expanded={openFaq === i} aria-controls={`faq-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                   <span className="font-serif text-xl">{f.q}</span>
-                  <span className={`text-gold transition-transform ${openFaq === i ? "rotate-45" : ""}`}>+</span>
+                  <span className={`text-gold transition-transform motion-reduce:transition-none ${openFaq === i ? "rotate-45" : ""}`} aria-hidden="true">+</span>
                 </button>
-                {openFaq === i && <p className="pb-6 text-sm leading-relaxed text-muted-foreground animate-in fade-in">{f.a}</p>}
+                {openFaq === i && <p id={`faq-${i}`} className="pb-6 text-sm leading-relaxed text-muted-foreground animate-in fade-in motion-reduce:animate-none">{f.a}</p>}
               </div>
             ))}
           </div>
