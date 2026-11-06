@@ -9,6 +9,8 @@ export const Route = createFileRoute("/apply")({
       { title: "Apply for Consideration — Mistress Sofia" },
       { name: "description", content: "Apply for long-term service under Mistress Sofia. Highly selective. 18+ only." },
       { property: "og:title", content: "Apply for Consideration — Mistress Sofia" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "A selective application for long-term service and training." },
     ],
   }),

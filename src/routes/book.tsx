@@ -10,6 +10,8 @@ export const Route = createFileRoute("/book")({
       { title: "Book a Session — Mistress Sofia" },
       { name: "description", content: "Book a private in-person or online session with Mistress Sofia. 50% deposit required. 18+ only." },
       { property: "og:title", content: "Book a Session — Mistress Sofia" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "Private sessions from £140. Tentative until the 50% deposit clears." },
     ],
   }),
