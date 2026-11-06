@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { saveSubmission } from "@/lib/submit";
 import { Confirmation, Field, makeRef, NavButtons, PaymentPicker, Steps, type PayMethod } from "@/components/site/FormKit";
 import { sessionPrice, CUSTOM_HOURLY } from "@/lib/pricing";
 
@@ -27,6 +28,7 @@ function Book() {
   const [pay, setPay] = useState<PayMethod | "">("");
   const [err, setErr] = useState<F>({});
   const [refId, setRefId] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   const price = sessionPrice(f.duration as never, Number(f.customHours) || 0);
   const deposit = Math.round(price / 2);
@@ -66,7 +68,15 @@ function Book() {
   }
   function next() {
     if (!validate()) return;
-    if (step === STEPS.length - 1) { setRefId(makeRef("MS-BKG")); window.scrollTo(0, 0); return; }
+    if (step === STEPS.length - 1) {
+      const ref = makeRef("MS-BKG");
+      setSending(true);
+      saveSubmission("booking_requests", ref, { ...f, pay, activities: acts })
+        .then(() => { setRefId(ref); window.scrollTo(0, 0); })
+        .catch(() => alert("Submission failed. Please try again."))
+        .finally(() => setSending(false));
+      return;
+    }
     setStep(step + 1); window.scrollTo(0, 0);
   }
 
@@ -169,7 +179,7 @@ function Book() {
               </div>
             )}
           </div>
-          <NavButtons step={step} last={step === STEPS.length - 1} onBack={() => setStep(step - 1)} onNext={next} nextLabel={step === 0 ? "Begin" : step === STEPS.length - 1 ? "Submit Booking" : undefined} />
+          <NavButtons step={step} last={step === STEPS.length - 1} onBack={() => setStep(step - 1)} onNext={sending ? () => {} : next} nextLabel={step === 0 ? "Begin" : step === STEPS.length - 1 ? "Submit Booking" : undefined} />
         </div>
       )}
     </section>

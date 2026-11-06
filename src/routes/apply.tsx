@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { saveSubmission } from "@/lib/submit";
 import { Confirmation, Field, makeRef, NavButtons, PaymentPicker, Steps, type PayMethod } from "@/components/site/FormKit";
 
 export const Route = createFileRoute("/apply")({
@@ -27,6 +28,7 @@ function Apply() {
   const [ack, setAck] = useState(false);
   const [err, setErr] = useState<F>({});
   const [refId, setRefId] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   const set = (k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
   const inp = (k: K, label: string, type = "text") => (
@@ -67,7 +69,15 @@ function Apply() {
 
   function next() {
     if (!validate()) return;
-    if (step === STEPS.length - 1) { setRefId(makeRef("MS-APP")); window.scrollTo(0, 0); return; }
+    if (step === STEPS.length - 1) {
+      const ref = makeRef("MS-APP");
+      setSending(true);
+      saveSubmission("applications", ref, { ...f, convicted: conv, pay, obey, ack })
+        .then(() => { setRefId(ref); window.scrollTo(0, 0); })
+        .catch(() => alert("Submission failed. Please try again."))
+        .finally(() => setSending(false));
+      return;
+    }
     setStep(step + 1); window.scrollTo(0, 0);
   }
 
@@ -141,7 +151,7 @@ function Apply() {
               </div>
             )}
           </div>
-          <NavButtons step={step} last={step === STEPS.length - 1} onBack={() => setStep(step - 1)} onNext={next} nextLabel={step === 0 ? "Begin" : undefined} />
+          <NavButtons step={step} last={step === STEPS.length - 1} onBack={() => setStep(step - 1)} onNext={sending ? () => {} : next} nextLabel={step === 0 ? "Begin" : undefined} />
         </div>
       )}
     </section>
