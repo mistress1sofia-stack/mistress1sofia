@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 
-export function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
+export function Field({ label, error, children }: { label: string; error?: string | undefined; children: ReactNode }) {
   return (
     <label className="block">
       <span className="mb-2 block text-[0.65rem] uppercase tracking-[0.25em] text-gold">{label}</span>
@@ -38,7 +38,7 @@ export function PaymentPicker({
   onChange: (v: PayMethod) => void;
   code: string;
   onCode: (v: string) => void;
-  error?: string;
+  error?: string | undefined;
 }) {
   const [preview, setPreview] = useState<string | null>(null);
   const opts: { id: string; label: string; disabled?: boolean }[] = [

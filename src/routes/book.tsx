@@ -53,7 +53,7 @@ function Book() {
     const e: F = {};
     const req = (k: K) => { if (!f[k]?.trim()) e[k] = "Required"; };
     if (step === 1) {
-      ["name", "email", "phone", "age", "location"].forEach(req);
+      (["name", "email", "phone", "age", "location"] as K[]).forEach(req);
       if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email";
       if (f.age && Number(f.age) < 18) e.age = "You must be 18 or older";
     }

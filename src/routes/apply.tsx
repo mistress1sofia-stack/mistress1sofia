@@ -45,12 +45,12 @@ function Apply() {
     const e: F = {};
     const req = (k: K) => { if (!f[k]?.trim()) e[k] = "Required"; };
     if (step === 1) {
-      ["name", "email", "phone", "age", "city", "sex"].forEach(req);
+      (["name", "email", "phone", "age", "city", "sex"] as K[]).forEach(req);
       if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email";
       if (f.age && Number(f.age) < 18) e.age = "You must be 18 or older";
     }
-    if (step === 2) ["height", "weight"].forEach(req);
-    if (step === 3) { ["occupation"].forEach(req); if (conv && !f.convDetail?.trim()) e.convDetail = "Please provide details"; }
+    if (step === 2) (["height", "weight"] as K[]).forEach(req);
+    if (step === 3) { (["occupation"] as K[]).forEach(req); if (conv && !f.convDetail?.trim()) e.convDetail = "Please provide details"; }
     if (step === 4) {
       if (!f.amount || Number(f.amount) < 100) e.amount = "Minimum tribute is £100";
       if (!pay) e.pay = "Select a payment method";
