@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { formatDetail } from '@/lib/inbox';
 export const Route = createFileRoute('/_authenticated/admin')({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: 'Private Inbox — Mistress Sofia' },
     { name: 'description', content: 'Private application and booking request review.' },
