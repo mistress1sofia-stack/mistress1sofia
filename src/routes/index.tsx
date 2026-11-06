@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import portrait from "@/assets/hero-portrait.jpg";
+import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
+const portrait = portraitAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,7 +59,7 @@ function Index() {
           <div className="relative order-1 lg:order-2">
             <div className="absolute -inset-3 border border-gold-soft/40" />
             <div className="relative aspect-[7/10] overflow-hidden">
-              <img src={portrait} alt="Mistress Sofia seated on a velvet throne" width={896} height={1280} className="h-full w-full object-cover" />
+              <img src={portrait} alt="Mistress Sofia seated on a velvet throne" width={1080} height={1550} className="h-full w-full object-cover" />
               <div className="vignette absolute inset-0" />
             </div>
           </div>
