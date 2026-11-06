@@ -18,7 +18,7 @@ export const Route = createFileRoute("/apply")({
 });
 
 const STEPS = ["Introduction", "Personal Details", "Background", "Tribute", "Commitment"];
-type F = Partial<Record<"name"|"pet"|"email"|"phone"|"age"|"city"|"sex"|"marital"|"height"|"weight"|"education"|"occupation"|"amount"|"why"|"pay"|"consent", string>>;
+type F = Partial<Record<"name"|"pet"|"email"|"phone"|"age"|"city"|"sex"|"marital"|"height"|"weight"|"education"|"occupation"|"amount"|"why"|"pay"|"obey"|"ack"|"consent", string>>;
 type K = keyof F;
 
 function Apply() {
