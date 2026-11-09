@@ -7,8 +7,8 @@ import type { submissionSchema } from './submission-validation';
 export async function persistAndNotify(data: z.infer<typeof submissionSchema>) {
   const { data: row, error } = await supabaseAdmin.from(data.table).insert({
     reference: data.reference,
-    name: String(data.details.name).trim(),
-    email: String(data.details.email).trim(),
+    name: String(data.details['name']).trim(),
+    email: String(data.details['email']).trim(),
     details: data.details as never,
   }).select('id').single();
   if (error || !row) throw new Error('Your request could not be saved. Please try again.');
