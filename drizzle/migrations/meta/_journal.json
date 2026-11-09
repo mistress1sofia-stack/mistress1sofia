@@ -15,6 +15,13 @@
       "when": 1793945045391,
       "tag": "0001_private_owner_request_inbox",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794258495194,
+      "tag": "0002_inbox_statuses_and_submission_security",
+      "breakpoints": true
     }
   ]
 }

@@ -21,8 +21,10 @@ export type Database = {
           email: string | null
           id: string
           name: string | null
+          notes: string | null
           reference: string
           reviewed_at: string | null
+          status: string
         }
         Insert: {
           created_at?: string
@@ -30,8 +32,10 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          notes?: string | null
           reference: string
           reviewed_at?: string | null
+          status?: string
         }
         Update: {
           created_at?: string
@@ -39,8 +43,10 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          notes?: string | null
           reference?: string
           reviewed_at?: string | null
+          status?: string
         }
         Relationships: []
       }
@@ -51,8 +57,10 @@ export type Database = {
           email: string | null
           id: string
           name: string | null
+          notes: string | null
           reference: string
           reviewed_at: string | null
+          status: string
         }
         Insert: {
           created_at?: string
@@ -60,8 +68,10 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          notes?: string | null
           reference: string
           reviewed_at?: string | null
+          status?: string
         }
         Update: {
           created_at?: string
@@ -69,8 +79,28 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          notes?: string | null
           reference?: string
           reviewed_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      submission_events: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hash: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hash: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hash?: string
         }
         Relationships: []
       }
