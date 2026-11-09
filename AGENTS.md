@@ -33,4 +33,5 @@ use the editor.
 - Owner roles are assigned only by an Auth confirmation trigger using the verified owner identity; users cannot edit their own roles.
 - App emails use managed sending only after sender-domain setup; do not create email queues or email tables.
 - Keep entities compatibility aliases exact-match only; prefix aliases break modern htmlparser2 subpath exports while legacy React Email imports still need the pinned version.
+- Recover failed dynamic page imports with one session-storage-bounded full reload; router resets cannot clear the browser's rejected import cache, and repeated failures must retain manual recovery instead of looping.
 - Public forms submit through validated server functions that save first, then send fixed-recipient owner alerts; email failures never discard saved requests and email bodies contain only references to protect sensitive details.
