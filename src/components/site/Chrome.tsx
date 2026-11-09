@@ -71,7 +71,7 @@ export function Footer() {
           {links.map((l) => <a key={l.label} href={l.href} className="hover:text-gold">{l.label}</a>)}
           <Link to="/apply" className="hover:text-gold">Apply to Serve</Link>
           <Link to="/book" className="hover:text-gold">Book a Session</Link>
-          <Button asChild variant="link" className="h-auto justify-start px-0 text-xs text-muted-foreground"><Link to={signedIn ? '/admin' : '/auth'}>{signedIn ? 'Private inbox' : 'Owner sign in'}</Link></Button>
+          <Button asChild variant="link" className="h-auto justify-start px-0 text-xs text-muted-foreground"><a href={signedIn ? '/admin' : '/auth'}>{signedIn ? 'Private inbox' : 'Owner sign in'}</a></Button>
         </div>
         <div className="text-xs leading-relaxed text-muted-foreground">
           <p>Strictly 18+ adults only. All interactions are consensual, negotiated in advance, and conducted between adults.</p>
