@@ -15,6 +15,7 @@ import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ApiPublicCronPurgeStaleRouteImport } from './routes/api/public/cron/purge-stale'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -46,6 +47,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicCronPurgeStaleRoute = ApiPublicCronPurgeStaleRouteImport.update({
+  id: '/api/public/cron/purge-stale',
+  path: '/api/public/cron/purge-stale',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/book'
     | '/admin'
+    | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/book'
     | '/admin'
+    | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/book'
     | '/_authenticated/admin'
+    | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -113,6 +125,7 @@ export interface RootRouteChildren {
   ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
+  ApiPublicCronPurgeStaleRoute: typeof ApiPublicCronPurgeStaleRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -160,6 +173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/cron/purge-stale': {
+      id: '/api/public/cron/purge-stale'
+      path: '/api/public/cron/purge-stale'
+      fullPath: '/api/public/cron/purge-stale'
+      preLoaderRoute: typeof ApiPublicCronPurgeStaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -187,6 +207,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
+  ApiPublicCronPurgeStaleRoute: ApiPublicCronPurgeStaleRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

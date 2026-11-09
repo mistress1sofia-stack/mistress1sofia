@@ -1,4 +1,6 @@
 import { useState, type ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
+import { CONTACT_EMAIL } from "@/lib/config";
 
 export function Field({ label, error, hint, children }: { label: string; error?: string | undefined; hint?: string | undefined; children: ReactNode }) {
   return (
@@ -79,10 +81,10 @@ export function PrivacyNote() {
       <p className="mb-2 text-[0.65rem] uppercase tracking-[0.25em] text-gold">Privacy Notice</p>
       <p>
         What you enter here is sent to a private inbox that only Mistress Sofia can access, and is used solely to
-        consider your request. It is never published, sold, or shared. Unsuccessful requests are deleted once a
-        decision is made; you may ask for your submission to be deleted at any time by emailing{" "}
-        <a className="text-gold underline" href="mailto:mistress.sofia8@yahoo.com">mistress.sofia8@yahoo.com</a>{" "}
-        with your reference ID.
+        consider your request. It is never published, sold, or shared. Declined requests are deleted straight after
+        the decision; undecided requests are deleted automatically after 90 days. You may ask for your submission to
+        be deleted at any time by emailing {CONTACT_EMAIL} with your reference ID. Read the full{" "}
+        <Link to="/privacy" className="text-gold underline">privacy notice</Link>.
       </p>
     </div>
   );
@@ -104,6 +106,38 @@ export function ConsentCheckbox({
         I consent to my answers being stored privately and reviewed by Mistress Sofia, as described in the privacy notice above.
       </label>
       {error && <p role="alert" className="mt-1 text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
+
+export function SensitiveConsentCheckbox({
+  checked,
+  onChange,
+  error,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  error?: string | undefined;
+}) {
+  return (
+    <div>
+      <label className="flex items-start gap-3 text-sm">
+        <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="mt-1 accent-[var(--crimson)]" />
+        I consent to Mistress Sofia storing the health, limits and preference details I have entered, for the sole purpose of considering my request.
+      </label>
+      {error && <p role="alert" className="mt-1 text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
+
+// Honeypot: invisible to people, attractive to bots. Any value rejects the submission.
+export function Honeypot({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden">
+      <label>
+        Website
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" value={value} onChange={(e) => onChange(e.target.value)} />
+      </label>
     </div>
   );
 }
@@ -130,10 +164,6 @@ export function NavButtons({ step, last, onBack, onNext, nextLabel, sending }: {
       </button>
     </div>
   );
-}
-
-export function makeRef(prefix: string) {
-  return `${prefix}-${Date.now().toString(36).toUpperCase().slice(-6)}${Math.floor(Math.random() * 900 + 100)}`;
 }
 
 export function Confirmation({ title, refId, children }: { title: string; refId: string; children: ReactNode }) {
