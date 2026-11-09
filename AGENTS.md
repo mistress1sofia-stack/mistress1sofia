@@ -32,3 +32,4 @@ use the editor.
 - Private inbox reads and review updates use authenticated clients and database role policies; never rely on an email check in the browser for authorization.
 - Owner roles are assigned only by an Auth confirmation trigger using the verified owner identity; users cannot edit their own roles.
 - App emails use managed sending only after sender-domain setup; do not create email queues or email tables.
+- Public forms submit through validated server functions that save first, then send fixed-recipient owner alerts; email failures never discard saved requests and email bodies contain only references to protect sensitive details.

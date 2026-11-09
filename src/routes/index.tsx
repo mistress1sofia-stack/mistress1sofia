@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Mistress Sofia — Professional Dominatrix" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: 'og:image', content: portrait },
+      { name: 'twitter:image', content: portrait },
       { property: "og:description", content: "Mature. Sensual. Sadistic. Private sessions and selective long-term service. 18+ only." },
     ],
   }),
