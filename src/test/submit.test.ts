@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sanitizeDetails } from "@/lib/submit";
+import { sanitizeDetails } from "@/lib/submission-validation";
 
 describe("sanitizeDetails", () => {
   it("strips payment credential fields before storage", () => {
