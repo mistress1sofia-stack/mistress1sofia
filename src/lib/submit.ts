@@ -3,8 +3,8 @@ export { sanitizeDetails } from './submission-validation';
 
 export async function saveSubmission(
   table: "applications" | "booking_requests",
-  reference: string,
   details: Record<string, unknown>,
+  spam: { website: string; elapsedMs: number },
 ) {
-  return submitRequest({ data: { table, reference, details } });
+  return submitRequest({ data: { table, details, website: spam.website, elapsedMs: spam.elapsedMs } });
 }
