@@ -5,6 +5,7 @@ import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPick
 import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/apply")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Apply for Consideration — Mistress Sofia" },

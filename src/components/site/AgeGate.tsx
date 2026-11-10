@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-const KEY = "ms-age-verified";
+export const AGE_KEY = "ms-age-verified";
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+// Inline head script (runs before first paint): marks the document as
+// age-verified so CSS can reveal page content without a flash. The
+// remembered choice expires after 30 days.
+export const AGE_GATE_SCRIPT = `try{var v=JSON.parse(localStorage.getItem("${AGE_KEY}"));if(v&&v.t&&Date.now()-v.t<${THIRTY_DAYS_MS}){document.documentElement.dataset.age="yes"}}catch(e){}`;
 
 export function AgeGate() {
   const [open, setOpen] = useState(false);
@@ -8,7 +14,7 @@ export function AgeGate() {
   const enterRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (localStorage.getItem(KEY) !== "yes") setOpen(true);
+    if (document.documentElement.dataset.age !== "yes") setOpen(true);
   }, []);
 
   useEffect(() => {
@@ -58,7 +64,8 @@ export function AgeGate() {
             ref={enterRef}
             className="btn-crimson"
             onClick={() => {
-              localStorage.setItem(KEY, "yes");
+              localStorage.setItem(AGE_KEY, JSON.stringify({ t: Date.now() }));
+              document.documentElement.dataset.age = "yes";
               setOpen(false);
             }}
           >
