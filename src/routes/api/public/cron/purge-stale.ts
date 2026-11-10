@@ -5,6 +5,7 @@ import { authenticateCronRequest } from '@/integrations/supabase/cron-auth';
 // Declined requests are deleted by the owner at decision time; accepted
 // requests are kept until the owner deletes them or the person asks.
 export const Route = createFileRoute('/api/public/cron/purge-stale')({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       POST: async ({ request }) => {

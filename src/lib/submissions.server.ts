@@ -1,4 +1,4 @@
-import { getRequest } from '@tanstack/react-start';
+import { getRequest } from '@tanstack/react-start/server';
 import { supabaseAdmin } from '@/integrations/supabase/client.server';
 import { sendTemplateEmail } from './email-templates/send-email';
 import { OWNER_EMAIL } from './inbox';

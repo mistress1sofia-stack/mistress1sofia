@@ -14,7 +14,7 @@ export function AgeGate() {
   const enterRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (document.documentElement.dataset.age !== "yes") setOpen(true);
+    if (document.documentElement.dataset['age'] !== "yes") setOpen(true);
   }, []);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export function AgeGate() {
             className="btn-crimson"
             onClick={() => {
               localStorage.setItem(AGE_KEY, JSON.stringify({ t: Date.now() }));
-              document.documentElement.dataset.age = "yes";
+              document.documentElement.dataset['age'] = "yes";
               setOpen(false);
             }}
           >
