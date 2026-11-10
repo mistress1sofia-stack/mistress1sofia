@@ -6,6 +6,7 @@ import { sessionPrice, CUSTOM_HOURLY } from "@/lib/pricing";
 import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/book")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Book a Session — Mistress Sofia" },
