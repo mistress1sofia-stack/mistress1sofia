@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { saveSubmission } from "@/lib/submit";
 import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPicker, PrivacyNote, SensitiveConsentCheckbox, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
-import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/apply")({
   staticData: { sitemap: true },
@@ -14,8 +13,7 @@ export const Route = createFileRoute("/apply")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "A selective application for long-term service and training." },
-      { property: "og:image", content: portraitAsset.url },
-      { name: "twitter:image", content: portraitAsset.url },
+      // The link-preview image (og:image) comes from the root route.
     ],
     links: [{ rel: "canonical", href: "https://mistresssofia.site/apply" }],
   }),
@@ -181,7 +179,7 @@ function Apply() {
                   <input type="checkbox" checked={obey} onChange={(e) => setObey(e.target.checked)} className="mt-1 accent-[var(--crimson)]" data-invalid={err.obey ? true : undefined} aria-invalid={err.obey ? true : undefined} />
                   I am willing to offer 100% obedience to Mistress Sofia within negotiated limits.
                 </label>
-                {err.obey && <p role="alert" className="text-xs text-destructive">{err.obey}</p>}
+                {err.obey && <p role="alert" className="text-xs text-danger">{err.obey}</p>}
                 <Field label="Why do you seek to serve Mistress Sofia?" error={err.why}>
                   <textarea rows={7} className="field" value={f.why ?? ""} onChange={set("why")} data-invalid={err.why ? true : undefined} aria-invalid={err.why ? true : undefined} />
                 </Field>
@@ -189,7 +187,7 @@ function Apply() {
                   <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} className="mt-1 accent-[var(--crimson)]" data-invalid={err.ack ? true : undefined} aria-invalid={err.ack ? true : undefined} />
                   I formally acknowledge that all information provided is true, that I am over 18, and that submission does not guarantee acceptance.
                 </label>
-                {err.ack && <p role="alert" className="text-xs text-destructive">{err.ack}</p>}
+                {err.ack && <p role="alert" className="text-xs text-danger">{err.ack}</p>}
               </div>
             )}
             {step === 5 && (
