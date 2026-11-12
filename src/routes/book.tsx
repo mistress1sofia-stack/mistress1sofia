@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { saveSubmission } from "@/lib/submit";
 import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPicker, PrivacyNote, SensitiveConsentCheckbox, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
 import { sessionPrice, CUSTOM_HOURLY } from "@/lib/pricing";
-import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/book")({
   staticData: { sitemap: true },
@@ -15,8 +14,7 @@ export const Route = createFileRoute("/book")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "Private sessions from £140. Requests are tentative until the deposit is arranged privately." },
-      { property: "og:image", content: portraitAsset.url },
-      { name: "twitter:image", content: portraitAsset.url },
+      // The link-preview image (og:image) comes from the root route.
     ],
     links: [{ rel: "canonical", href: "https://mistresssofia.site/book" }],
   }),
@@ -196,7 +194,7 @@ function Book() {
                   <div>
                     <span className="mb-3 block text-[0.65rem] uppercase tracking-[0.25em] text-gold">Platform Preference</span>
                     {choice("platform", ["Skype", "Telegram", "Session"])}
-                    {err.platform && <p role="alert" className="mt-1 text-xs text-destructive">{err.platform}</p>}
+                    {err.platform && <p role="alert" className="mt-1 text-xs text-danger">{err.platform}</p>}
                   </div>
                 )}
               </div>
