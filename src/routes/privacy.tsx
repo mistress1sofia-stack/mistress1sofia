@@ -44,7 +44,7 @@ function Privacy() {
         <div>
           <h2 className="text-2xl text-gold">How long it is kept</h2>
           <ul className="mt-4 list-none space-y-3">
-            <li className="flex items-start gap-4"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-crimson" />Declined requests are deleted straight after the decision.</li>
+            <li className="flex items-start gap-4"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-crimson" />Declined requests are deleted within 24 hours of the decision.</li>
             <li className="flex items-start gap-4"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-crimson" />Undecided requests are deleted automatically after 90 days.</li>
             <li className="flex items-start gap-4"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rotate-45 bg-crimson" />Accepted requests are kept until Mistress Sofia deletes them or you ask for deletion.</li>
           </ul>
@@ -54,6 +54,29 @@ function Privacy() {
           <p className="mt-4">
             Email {CONTACT_EMAIL} with the reference ID shown on your confirmation screen, and your submission will
             be deleted. You may do this at any time, whatever the status of your request.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-2xl text-gold">Who stores it</h2>
+          <p className="mt-4">
+            Submissions are held in a private, access-controlled database that only the owner's verified account can
+            read, and the owner is alerted by an email that contains only your reference ID, never your answers. The
+            site does not use advertising or tracking cookies, and does not sell or share your information.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-2xl text-gold">What this site stores in your browser</h2>
+          <p className="mt-4">
+            Your confirmation that you are an adult is remembered in your browser for 30 days, so you are not asked on
+            every visit. While you complete a form, your progress is kept only in that browser tab and is cleared when
+            you submit or close the tab. Nothing else is stored.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-2xl text-gold">Your rights</h2>
+          <p className="mt-4">
+            You may ask to see, correct or delete what you have submitted at any time, by emailing {CONTACT_EMAIL} with
+            your reference ID.
           </p>
         </div>
         <div>
