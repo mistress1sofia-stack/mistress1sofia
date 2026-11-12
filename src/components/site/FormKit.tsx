@@ -8,7 +8,7 @@ export function Field({ label, error, hint, children }: { label: string; error?:
       <span className="mb-2 block text-[0.65rem] uppercase tracking-[0.25em] text-gold">{label}</span>
       {children}
       {hint && !error && <span className="mt-1 block text-xs text-muted-foreground">{hint}</span>}
-      {error && <span role="alert" className="mt-1 block text-xs text-destructive">{error}</span>}
+      {error && <span role="alert" className="mt-1 block text-xs text-danger">{error}</span>}
     </label>
   );
 }
@@ -66,7 +66,7 @@ export function PaymentPicker({
           </button>
         ))}
       </div>
-      {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
+      {error && <p role="alert" className="text-xs text-danger">{error}</p>}
       <p className="text-xs leading-relaxed text-muted-foreground">
         No payment is taken through this site. Never send card codes, card photos, or wallet details here — if your
         request is accepted, payment instructions are arranged privately and confirmed before anything is due.
@@ -81,8 +81,8 @@ export function PrivacyNote() {
       <p className="mb-2 text-[0.65rem] uppercase tracking-[0.25em] text-gold">Privacy Notice</p>
       <p>
         What you enter here is sent to a private inbox that only Mistress Sofia can access, and is used solely to
-        consider your request. It is never published, sold, or shared. Declined requests are deleted straight after
-        the decision; undecided requests are deleted automatically after 90 days. You may ask for your submission to
+        consider your request. It is never published, sold, or shared. Declined requests are deleted within 24 hours
+        of the decision; undecided requests are deleted automatically after 90 days. You may ask for your submission to
         be deleted at any time by emailing {CONTACT_EMAIL} with your reference ID. Read the full{" "}
         <Link to="/privacy" className="text-gold underline">privacy notice</Link>.
       </p>
@@ -105,7 +105,7 @@ export function ConsentCheckbox({
         <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="mt-1 accent-[var(--crimson)]" />
         I consent to my answers being stored privately and reviewed by Mistress Sofia, as described in the privacy notice above.
       </label>
-      {error && <p role="alert" className="mt-1 text-xs text-destructive">{error}</p>}
+      {error && <p role="alert" className="mt-1 text-xs text-danger">{error}</p>}
     </div>
   );
 }
@@ -125,7 +125,7 @@ export function SensitiveConsentCheckbox({
         <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="mt-1 accent-[var(--crimson)]" />
         I consent to Mistress Sofia storing the health, limits and preference details I have entered, for the sole purpose of considering my request.
       </label>
-      {error && <p role="alert" className="mt-1 text-xs text-destructive">{error}</p>}
+      {error && <p role="alert" className="mt-1 text-xs text-danger">{error}</p>}
     </div>
   );
 }
