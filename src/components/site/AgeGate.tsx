@@ -3,27 +3,48 @@ import { useEffect, useRef, useState } from "react";
 export const AGE_KEY = "ms-age-verified";
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
-// Inline head script (runs before first paint): marks the document as
-// age-verified so CSS can reveal page content without a flash. The
-// remembered choice expires after 30 days.
-export const AGE_GATE_SCRIPT = `try{var v=JSON.parse(localStorage.getItem("${AGE_KEY}"));if(v&&v.t&&Date.now()-v.t<${THIRTY_DAYS_MS}){document.documentElement.dataset.age="yes"}}catch(e){}`;
+// Inline head script (runs before first paint). It marks the page "gate" for everyone,
+// then "yes" for a visitor who confirmed their age in the last 30 days. A CSS rule in
+// styles.css hides the gate at once when data-age is "yes", so verified visitors never
+// see it flash, and everyone else always sees it covering the page from the first paint.
+export const AGE_GATE_SCRIPT = `(function(){var d=document.documentElement;d.dataset.age="gate";try{var v=JSON.parse(localStorage.getItem("${AGE_KEY}"));if(v&&v.t&&Date.now()-v.t<${THIRTY_DAYS_MS}){d.dataset.age="yes"}}catch(e){}})();`;
 
 export function AgeGate() {
-  const [open, setOpen] = useState(false);
+  // Starts open so the gate is part of the server-rendered page and covers the content
+  // from the very first paint. Verified visitors are released as soon as the page loads.
+  const [open, setOpen] = useState(true);
   const dialogRef = useRef<HTMLDivElement>(null);
   const enterRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (document.documentElement.dataset['age'] !== "yes") setOpen(true);
+    if (document.documentElement.dataset["age"] === "yes") setOpen(false);
   }, []);
 
+  // While the gate is up: lock scrolling, put focus on the Enter button, and hide the page
+  // behind it from the keyboard and screen readers (inert) so it cannot be reached.
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    if (open) enterRef.current?.focus();
+    const verified = document.documentElement.dataset["age"] === "yes";
+    const behind = Array.from(document.querySelectorAll<HTMLElement>("header, main, footer"));
+    if (open && !verified) {
+      document.body.style.overflow = "hidden";
+      behind.forEach((el) => el.setAttribute("inert", ""));
+      enterRef.current?.focus();
+    }
     return () => {
       document.body.style.overflow = "";
+      behind.forEach((el) => el.removeAttribute("inert"));
     };
   }, [open]);
+
+  function confirmAge() {
+    try {
+      localStorage.setItem(AGE_KEY, JSON.stringify({ t: Date.now() }));
+    } catch {
+      /* Storage blocked (for example private browsing): they will be asked again next visit. */
+    }
+    document.documentElement.dataset["age"] = "yes";
+    setOpen(false);
+  }
 
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key !== "Tab" || !dialogRef.current) return;
@@ -42,7 +63,7 @@ export function AgeGate() {
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 px-6 backdrop-blur-xl">
+    <div className="age-gate fixed inset-0 z-[100] flex items-center justify-center bg-background/95 px-6 backdrop-blur-xl">
       <div
         ref={dialogRef}
         role="dialog"
@@ -60,18 +81,10 @@ export function AgeGate() {
           (or of legal age in your jurisdiction) to proceed.
         </p>
         <div className="mt-8 flex flex-col gap-3">
-          <button
-            ref={enterRef}
-            className="btn-crimson"
-            onClick={() => {
-              localStorage.setItem(AGE_KEY, JSON.stringify({ t: Date.now() }));
-              document.documentElement.dataset['age'] = "yes";
-              setOpen(false);
-            }}
-          >
+          <button ref={enterRef} type="button" className="btn-crimson" onClick={confirmAge}>
             I Am 18 or Older — Enter
           </button>
-          <button className="btn-gold" onClick={() => (window.location.href = "https://www.google.com")}>
+          <button type="button" className="btn-gold" onClick={() => (window.location.href = "https://www.google.com")}>
             Exit / Leave
           </button>
         </div>
