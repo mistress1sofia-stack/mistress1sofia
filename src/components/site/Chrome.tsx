@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   { label: "About", href: "/#about" },
@@ -10,6 +10,12 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  // Escape closes the mobile menu wherever the keyboard focus is.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/70 backdrop-blur-lg">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
