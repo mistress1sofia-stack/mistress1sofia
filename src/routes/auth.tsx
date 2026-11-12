@@ -3,6 +3,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { LockKeyhole, ShieldCheck } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { isOwnerEmail } from '@/lib/inbox';
 
 export const Route = createFileRoute('/auth')({
   staticData: { sitemap: false },
@@ -24,9 +25,27 @@ function Auth() {
   const [message, setMessage] = useState('');
   const [mfaFactor, setMfaFactor] = useState<string | null>(null);
   const [mfaCode, setMfaCode] = useState('');
+  // One-time owner account setup. Only reachable at /auth?setup=owner, and it only works
+  // while sign-up is switched on in the backend (switch it off again afterwards).
+  const [setup, setSetup] = useState(false);
+  useEffect(() => { setSetup(new URLSearchParams(window.location.search).get('setup') === 'owner'); }, []);
 
   useEffect(() => {
-    void supabase.auth.getUser().then(({ data }) => { if (data.user) void navigate({ to: '/admin' }); });
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) return;
+      // Already signed in. If two-step login is on but the code has not been entered in this
+      // session, ask for the code here instead of opening the inbox (which would bounce back).
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (aal && aal.nextLevel === 'aal2' && aal.currentLevel !== 'aal2') {
+        const { data: factors } = await supabase.auth.mfa.listFactors();
+        const totp = factors?.totp?.[0];
+        if (totp) { setMfaFactor(totp.id); return; }
+        setMessage('Two-step login could not be started. Please sign in again.');
+        return;
+      }
+      void navigate({ to: '/admin' });
+    })();
   }, [navigate]);
 
   async function submit(event: FormEvent) {
@@ -46,6 +65,19 @@ function Auth() {
     finally { setBusy(false); }
   }
 
+  // Sends a password-reset link. The reply is the same whether or not an account exists,
+  // so nobody can use this page to find out which emails have accounts.
+  async function sendReset() {
+    const address = email.trim();
+    if (!address) { setMessage('Type your email in the box above first, then press "Forgot password?".'); return; }
+    setBusy(true); setMessage('');
+    try {
+      await supabase.auth.resetPasswordForEmail(address, { redirectTo: `${window.location.origin}/reset-password` });
+    } catch { /* same reply either way */ }
+    setMessage('If an account exists for that email, a reset link has been sent. Check your inbox and spam folder.');
+    setBusy(false);
+  }
+
   async function verifyMfa(event: FormEvent) {
     event.preventDefault(); if (!mfaFactor) return;
     setBusy(true); setMessage('');
@@ -56,6 +88,18 @@ function Auth() {
       if (verifyError) throw verifyError;
       await navigate({ to: '/admin' });
     } catch (error) { setMessage(error instanceof Error ? error.message : 'That code was not accepted. Please try again.'); }
+    finally { setBusy(false); }
+  }
+
+  async function createOwner(event: FormEvent) {
+    event.preventDefault(); setBusy(true); setMessage('');
+    try {
+      if (!isOwnerEmail(email.trim())) throw new Error('Only the owner email can be set up here.');
+      if (password.length < 12) throw new Error('Choose a password of at least 12 characters.');
+      const { error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: `${window.location.origin}/auth` } });
+      if (error) throw error;
+      setMessage('Account created. Open the confirmation email we just sent, confirm it, then sign in here.');
+    } catch (error) { setMessage(error instanceof Error ? error.message : 'Unable to create the account. Please try again.'); }
     finally { setBusy(false); }
   }
 
@@ -73,8 +117,17 @@ function Auth() {
     ) : (
       <form onSubmit={submit} className="mt-8 space-y-5">
         <label className="block text-sm">Email<input className="field mt-2" type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="username" /></label>
-        <label className="block text-sm">Password<input className="field mt-2" type="password" minLength={12} required value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" /></label>
+        <label className="block text-sm">Password<input className="field mt-2" type="password" required value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" /></label>
         <Button className="w-full" disabled={busy} type="submit">{busy ? 'Please wait…' : 'Sign in'}</Button>
+        <button type="button" disabled={busy} onClick={() => void sendReset()} className="block w-full text-center text-sm text-muted-foreground underline underline-offset-4 hover:text-gold">Forgot password?</button>
+      </form>
+    )}
+    {setup && !mfaFactor && (
+      <form onSubmit={createOwner} className="mt-12 space-y-5 border-t border-border pt-8">
+        <p className="text-sm text-muted-foreground">One-time owner setup. This only works while sign-up is switched on in the backend; switch it off again once your account is confirmed.</p>
+        <label className="block text-sm">Owner email<input className="field mt-2" type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="username" /></label>
+        <label className="block text-sm">New password (at least 12 characters)<input className="field mt-2" type="password" required minLength={12} value={password} onChange={e => setPassword(e.target.value)} autoComplete="new-password" /></label>
+        <Button className="w-full" variant="outline" disabled={busy} type="submit">{busy ? 'Please wait…' : 'Create owner account'}</Button>
       </form>
     )}
     {message && <p role="status" className="mt-5 text-sm text-gold break-words">{message}</p>}
