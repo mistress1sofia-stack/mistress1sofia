@@ -12,31 +12,28 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { AgeGate } from "@/components/site/AgeGate";
+import { AgeGate, AGE_GATE_SCRIPT } from "@/components/site/AgeGate";
 import { Header, Footer } from "@/components/site/Chrome";
 import { supabase } from "@/integrations/supabase/client";
 import { isModuleLoadError, recoverModuleLoad } from '@/lib/module-recovery';
-import { Button } from '@/components/ui/button';
+
+const SITE_URL = "https://mistresssofia.site";
+const SITE_DESCRIPTION =
+  "Mistress Sofia, a mature, sensual and sadistic professional Dominatrix. Private sessions and selective long-term service. 18+ only.";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
+    <section className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-6 py-24 text-center">
+      <p className="eyebrow">Error 404</p>
+      <h1 className="mt-4 text-5xl sm:text-6xl">Page not found</h1>
+      <div className="gold-rule my-8 w-full max-w-xs" />
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        The page you are looking for does not exist or has been moved.
+      </p>
+      <Link to="/" className="btn-crimson mt-10">
+        Go home
+      </Link>
+    </section>
   );
 }
 
@@ -51,16 +48,17 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+        <p className="eyebrow">Something went wrong</p>
+        <h1 className="mt-4 text-4xl">This page didn't load</h1>
+        <div className="gold-rule my-6" />
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Please try again, or head back to the home page.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <Button
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
             onClick={() => {
               if (isModuleLoadError(error)) {
                 window.location.reload();
@@ -69,14 +67,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
               void router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="btn-crimson"
           >
             Try again
-          </Button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
+          </button>
+          <a href="/" className="btn-gold">
             Go home
           </a>
         </div>
@@ -86,16 +81,31 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // Every route must make an explicit sitemap decision. The root itself is never listed.
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Mistress Sofia — Professional Dominatrix" },
-      { name: "description", content: "Mistress Sofia, professional Dominatrix. 18+ only." },
-      { property: "og:title", content: "Mistress Sofia" },
-      { property: "og:description", content: "Professional Dominatrix. 18+ only." },
+      { name: "description", content: SITE_DESCRIPTION },
+      { name: "author", content: "Mistress Sofia" },
+      { name: "theme-color", content: "#09090b" },
+      { name: "color-scheme", content: "dark" },
+      // Adult-content label so parental-control and filtering software can recognise the site.
+      { name: "rating", content: "RTA-5042-1996-1400-1577-RTA" },
+      { property: "og:site_name", content: "Mistress Sofia" },
+      { property: "og:title", content: "Mistress Sofia — Professional Dominatrix" },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      // Link-preview image: must be a full address, 1200x630 (file lives in /public).
+      { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Mistress Sofia — Professional Dominatrix" },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -105,8 +115,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "256x256" },
     ],
+    // Runs before the page is first painted: marks a recently confirmed adult as verified
+    // so the age gate never flashes for them (and always shows for everyone else).
+    scripts: [{ children: AGE_GATE_SCRIPT }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -116,7 +130,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: the age-gate script sets data-age on <html> before React starts.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
