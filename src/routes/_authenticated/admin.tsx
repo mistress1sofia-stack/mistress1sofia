@@ -150,14 +150,14 @@ function Admin() {
             <Button className="mt-3" size="sm" variant="outline" disabled={saving || notes === (active.notes ?? '')} onClick={saveNotes}>Save notes</Button>
           </div>
           <div className="mt-8 border-t border-border pt-6">
-            {offerDelete && <p className="mb-4 text-sm text-muted-foreground">This request is marked Declined. Declined requests are deleted straight after the decision — delete it now?</p>}
+            {offerDelete && <p className="mb-4 text-sm text-muted-foreground">This request is marked Declined. Declined requests are deleted automatically within 24 hours of the decision — you can delete it now, or mark it another status before then to keep it.</p>}
             {confirmDelete ? <div className="flex flex-wrap items-center gap-3">
-              <p className="text-sm text-destructive">Permanently delete {active.reference}? This cannot be undone.</p>
+              <p className="text-sm text-danger">Permanently delete {active.reference}? This cannot be undone.</p>
               <Button variant="destructive" disabled={saving} onClick={() => deleteRow(active.id)}>Confirm delete</Button>
               <Button variant="outline" onClick={() => setConfirmDelete(false)}>Cancel</Button>
             </div> : <Button variant="outline" disabled={saving} onClick={() => setConfirmDelete(true)}><Trash2 />Delete this request</Button>}
           </div>
-          {message && <p role="alert" className="mt-4 text-destructive">{message}</p>}
+          {message && <p role="alert" className="mt-4 text-danger">{message}</p>}
         </> : <p className="text-muted-foreground">No request selected.</p>}</div>
       </div>}
     </>}
@@ -202,6 +202,6 @@ function MfaPanel({ enabled, pending, onChanged }: { enabled: boolean; pending: 
       </label>
       <div className="flex gap-3"><Button size="sm" disabled={busy || code.trim().length !== 6} onClick={verify}>{busy ? 'Checking…' : 'Turn on two-step login'}</Button><Button size="sm" variant="outline" onClick={() => setEnrolling(null)}>Cancel</Button></div>
     </div> : <div className="mt-3"><p className="text-sm text-muted-foreground">Two-step login is off. Turn it on so a code from your phone is also required to sign in.</p><Button className="mt-3" size="sm" variant="outline" disabled={busy} onClick={enroll}>{busy ? 'Please wait…' : 'Set up two-step login'}</Button></div>}
-    {message && <p role="alert" className="mt-3 text-sm text-destructive">{message}</p>}
+    {message && <p role="alert" className="mt-3 text-sm text-danger">{message}</p>}
   </div>;
 }
