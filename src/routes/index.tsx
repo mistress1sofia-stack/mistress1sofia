@@ -1,19 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import portraitAsset from "@/assets/sofia_portrait.jpeg.asset.json";
-const portrait = portraitAsset.url;
+// Compressed hero portrait (WebP, 1080x1543, about 70 KB). To swap the photo, replace this file.
+import portrait from "@/assets/hero-portrait.webp";
 
 export const Route = createFileRoute("/")({
+  // Every route must make an explicit sitemap decision.
+  staticData: { sitemap: true },
   head: () => ({
-    meta: [
-      { title: "Mistress Sofia — Professional Dominatrix" },
-      { name: "description", content: "Mature. Sensual. Sadistic. Private sessions and long-term service with Mistress Sofia. Strictly 18+." },
-      { property: "og:title", content: "Mistress Sofia — Professional Dominatrix" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: 'og:image', content: portrait },
-      { name: 'twitter:image', content: portrait },
-      { property: "og:description", content: "Mature. Sensual. Sadistic. Private sessions and selective long-term service. 18+ only." },
+    // Title, description, link-preview image and the adult-content label come from the root route.
+    links: [
+      { rel: "canonical", href: "https://mistresssofia.site/" },
+      // Start loading the hero photo straight away: it is the largest thing on the page.
+      { rel: "preload", as: "image", href: portrait, type: "image/webp", fetchPriority: "high" },
     ],
   }),
   component: Index,
@@ -56,14 +54,14 @@ function Index() {
             </h1>
             <p className="mt-8 font-serif text-2xl italic text-muted-foreground">Mature. Sensual. Sadistic.</p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link to="/book" className="btn-crimson">Book a Private Session</Link>
-              <Link to="/apply" className="btn-gold">Apply for Consideration</Link>
+              <Link to="/book" className="btn-crimson">Book a Session</Link>
+              <Link to="/apply" className="btn-gold">Apply to Serve</Link>
             </div>
           </div>
           <div className="relative order-1 lg:order-2">
             <div className="absolute -inset-3 border border-gold-soft/40" />
             <div className="relative aspect-[7/10] overflow-hidden">
-              <img src={portrait} alt="Portrait of Mistress Sofia in a black gown and cap, holding a wooden cane" width={1080} height={1550} className="h-full w-full object-cover" />
+              <img src={portrait} alt="Portrait of Mistress Sofia in a black gown and cap, holding a wooden cane" width={1080} height={1543} fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
               <div className="vignette absolute inset-0" />
             </div>
           </div>
