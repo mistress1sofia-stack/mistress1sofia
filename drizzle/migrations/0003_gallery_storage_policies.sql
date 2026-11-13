@@ -1,0 +1,4 @@
+CREATE POLICY "Gallery public read" ON storage.objects FOR SELECT TO anon, authenticated USING (bucket_id = 'gallery');
+CREATE POLICY "Gallery admin upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'gallery' AND public.has_role(auth.uid(), 'admin') AND lower(storage.extension(name)) IN ('jpg','jpeg','png','webp','gif'));
+CREATE POLICY "Gallery admin update" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'gallery' AND public.has_role(auth.uid(), 'admin')) WITH CHECK (bucket_id = 'gallery' AND public.has_role(auth.uid(), 'admin') AND lower(storage.extension(name)) IN ('jpg','jpeg','png','webp','gif'));
+CREATE POLICY "Gallery admin delete" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'gallery' AND public.has_role(auth.uid(), 'admin'));
