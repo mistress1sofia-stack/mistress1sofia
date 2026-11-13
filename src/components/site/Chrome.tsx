@@ -76,7 +76,7 @@ export function Footer() {
           {links.map((l) => <a key={l.label} href={l.href} className="hover:text-gold">{t(l.label)}</a>)}
           <Link to="/apply" className="hover:text-gold">{t("Apply to Serve")}</Link>
           <Link to="/book" className="hover:text-gold">{t("Book a Session")}</Link>
-          <Link to="/privacy" className="hover:text-gold">{t("Privacy Notice")}</Link>
+          <Link to="/privacy" className="break-words hover:text-gold">{t("Privacy Notice")}</Link>
           <PrefsSwitcher className="mt-3" />
         </div>
         <div className="text-xs leading-relaxed text-muted-foreground">

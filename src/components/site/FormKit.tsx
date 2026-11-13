@@ -61,7 +61,7 @@ export function PaymentPicker({
             disabled={o.disabled}
             aria-pressed={value === o.id}
             onClick={() => onChange(o.id as PayMethod)}
-            className={`flex items-center justify-between border px-4 py-3 text-left text-sm transition ${
+            className={`grid items-center gap-3 border px-4 py-3 text-left text-sm transition sm:grid-cols-[minmax(0,1fr)_auto] ${
               value === o.id ? "border-crimson bg-oxblood/40 shadow-[var(--glow-crimson)]" : "border-input hover:border-gold-soft"
             } ${o.disabled ? "cursor-not-allowed opacity-40" : ""}`}
           >
@@ -82,7 +82,7 @@ export function PrivacyNote() {
   const { t } = useI18n();
   return (
     <div className="border border-border bg-card/60 p-5 text-xs leading-relaxed text-muted-foreground">
-      <p className="mb-2 text-[0.65rem] uppercase tracking-[0.25em] text-gold">{t("Privacy Notice")}</p>
+      <p className="mb-2 break-words text-[0.65rem] uppercase tracking-[0.25em] text-gold">{t("Privacy Notice")}</p>
       <p>
         {t("What you enter here is sent to a private inbox that only Mistress Sofia can access, and is used solely to consider your request. It is never published, sold, or shared. Declined requests are deleted within 24 hours of the decision; undecided requests are deleted automatically after 90 days. You may ask for your submission to be deleted at any time by emailing")}{" "}{CONTACT_EMAIL}{" "}{t("with your reference ID. Read the full")}{" "}
         <Link to="/privacy" className="text-gold underline">{t("privacy notice")}</Link>.
@@ -160,7 +160,7 @@ export function SubmitError({ message, onRetry }: { message: string; onRetry: ()
 export function NavButtons({ step, last, onBack, onNext, nextLabel, sending }: { step: number; last: boolean; onBack: () => void; onNext: () => void; nextLabel?: string | undefined; sending?: boolean | undefined }) {
   const { t } = useI18n();
   return (
-    <div className="mt-10 flex items-center justify-between gap-4">
+    <div className="mt-10 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
       <button type="button" className="btn-gold" onClick={onBack} disabled={step === 0 || sending} style={{ visibility: step === 0 ? "hidden" : "visible" }}>
         {t("Back")}
       </button>

@@ -72,11 +72,11 @@ export function AgeGate() {
         aria-modal="true"
         aria-labelledby="age-gate-title"
         aria-describedby="age-gate-desc"
-        className="glass w-full max-w-lg p-10 text-center"
+        className="glass max-h-[100dvh] w-full max-w-lg overflow-y-auto p-10 text-center"
         onKeyDown={onKeyDown}
       >
         <p className="eyebrow">{t("Restricted Access")}</p>
-        <h2 id="age-gate-title" className="mt-4 text-5xl">{t("Adults Only (18+)")}</h2>
+        <h2 id="age-gate-title" className="mt-4 break-words text-5xl">{t("Adults Only (18+)")}</h2>
         <div className="gold-rule my-6" />
         <p id="age-gate-desc" className="text-sm leading-relaxed text-muted-foreground">
           {t("This site contains mature themes intended for adults. Please confirm you are at least 18 years of age (or of legal age in your jurisdiction) to proceed.")}

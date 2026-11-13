@@ -23,7 +23,7 @@ function Privacy() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-16">
       <p className="eyebrow">{t("Your Privacy")}</p>
-      <h1 className="mt-4 text-5xl">{t("Privacy Notice")}</h1>
+      <h1 className="mt-4 break-words text-5xl">{t("Privacy Notice")}</h1>
       <div className="gold-rule my-10" />
       <div className="space-y-10 text-sm leading-relaxed text-foreground/90">
         <div>

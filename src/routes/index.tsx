@@ -108,7 +108,7 @@ function Index() {
       <section id="boundaries" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-4xl border border-crimson bg-oxblood/30 p-10 shadow-[var(--glow-crimson)] sm:p-14">
           <p className="eyebrow">{t("What I Do Not Offer")}</p>
-          <h2 className="mt-4 text-4xl sm:text-5xl">{t("Strict Non-Negotiable Boundaries")}</h2>
+          <h2 className="mt-4 break-words text-4xl sm:text-5xl">{t("Strict Non-Negotiable Boundaries")}</h2>
           <ul className="mt-10 space-y-4">
             {limits.map((l) => (
               <li key={l} className="flex items-start gap-4 border-b border-crimson/40 pb-4 text-sm">

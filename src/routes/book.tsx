@@ -245,7 +245,7 @@ function Book() {
             )}
             {step === 5 && (
               <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-px bg-border">
+                <div className="grid gap-px bg-border sm:grid-cols-2">
                   <div className="bg-background p-5"><p className="eyebrow">{t("Session Total")}</p><p className="mt-2 font-serif text-3xl">{money(price)}</p></div>
                   <div className="bg-background p-5"><p className="eyebrow">{t("50% Deposit")}</p><p className="mt-2 font-serif text-3xl text-gold">{money(deposit)}</p></div>
                 </div>
