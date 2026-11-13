@@ -5,6 +5,7 @@ import { PrefsSwitcher, useI18n } from "@/lib/i18n";
 const links = [
   { label: "About", href: "/#about" },
   { label: "Offerings", href: "/#offerings" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Boundaries", href: "/#boundaries" },
   { label: "Protocol & FAQ", href: "/#protocol" },
 ];
