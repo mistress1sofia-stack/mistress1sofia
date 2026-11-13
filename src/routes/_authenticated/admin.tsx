@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Check, Inbox, LogOut, RefreshCw, Search, ShieldCheck, Trash2 } from 'lucide-react';
@@ -109,7 +109,7 @@ function Admin() {
   }
 
   return <section className="mx-auto max-w-7xl px-6 py-12">
-    <div className="flex flex-wrap items-center justify-between gap-4"><div><Inbox className="mb-3 size-6 text-gold" /><h1 className="text-4xl text-gold">Private inbox</h1></div><Button variant="outline" onClick={signOut}><LogOut />Sign out</Button></div>
+    <div className="flex flex-wrap items-center justify-between gap-4"><div><Inbox className="mb-3 size-6 text-gold" /><h1 className="text-4xl text-gold">Private inbox</h1></div><div className="flex flex-wrap gap-3"><Link to="/gallery-manage" className="btn-gold">Manage gallery</Link><Button variant="outline" onClick={signOut}><LogOut />Sign out</Button></div></div>
     {access.isPending ? <p className="mt-8">Checking access…</p> : access.error ? <p role="alert" className="mt-8">Unable to verify access. Please sign in again.</p> : !access.data ? <p role="alert" className="mt-8">Access denied. This inbox is restricted to the owner’s verified account.</p> : <>
       <MfaPanel enabled={mfa.data === true} pending={mfa.isPending} onChanged={() => queryClient.invalidateQueries({ queryKey: ['mfa-factors'] })} />
       <div className="mt-8 flex flex-wrap items-center gap-3 border-b border-border pb-5">
