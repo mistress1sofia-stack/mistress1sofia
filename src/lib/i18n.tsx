@@ -253,6 +253,16 @@ const D: Record<string, [string, string]> = {
   "You may ask to see, correct or delete what you have submitted at any time, by emailing {email} with your reference ID.": ["Sie können jederzeit verlangen, einzusehen, zu berichtigen oder zu löschen, was Sie eingereicht haben, indem Sie eine E-Mail mit Ihrer Referenznummer an {email} senden.", "Vous pouvez à tout moment demander à consulter, corriger ou supprimer ce que vous avez envoyé, en écrivant à {email} avec votre numéro de référence."],
   "Adults only": ["Nur für Erwachsene", "Réservé aux adultes"],
   "This site is strictly for adults aged 18 or over (or of legal age in your jurisdiction). No information is knowingly collected from anyone under 18.": ["Diese Website ist ausschließlich für Erwachsene ab 18 Jahren (oder im Rechtsgebiet Volljährige) bestimmt. Es werden wissentlich keine Informationen von Personen unter 18 Jahren erfasst.", "Ce site est strictement réservé aux adultes de 18 ans ou plus (ou ayant l'âge légal dans leur pays). Aucune information n'est sciemment collectée auprès de personnes de moins de 18 ans."],
+  // ---- Gallery
+  "Gallery": ["Galerie", "Galerie"],
+  "A Glimpse of the Experience": ["Ein Einblick in das Erlebnis", "Un aperçu de l'expérience"],
+  "Loading…": ["Wird geladen…", "Chargement…"],
+  "The gallery could not be loaded. Please try again later.": ["Die Galerie konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", "La galerie n'a pas pu être chargée. Veuillez réessayer plus tard."],
+  "New photos are coming soon.": ["Neue Fotos folgen in Kürze.", "De nouvelles photos arrivent bientôt."],
+  "Gallery photo {n} of {total}": ["Galeriefoto {n} von {total}", "Photo de la galerie {n} sur {total}"],
+  "Photo viewer": ["Fotobetrachter", "Visionneuse de photos"],
+  "Previous photo": ["Vorheriges Foto", "Photo précédente"],
+  "Next photo": ["Nächstes Foto", "Photo suivante"],
   // ---- Not found
   "Error 404": ["Fehler 404", "Erreur 404"],
   "Page not found": ["Seite nicht gefunden", "Page introuvable"],
