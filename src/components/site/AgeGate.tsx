@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { PrefsSwitcher, useI18n } from "@/lib/i18n";
 
 export const AGE_KEY = "ms-age-verified";
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
@@ -10,6 +11,7 @@ const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 export const AGE_GATE_SCRIPT = `(function(){var d=document.documentElement;d.dataset.age="gate";try{var v=JSON.parse(localStorage.getItem("${AGE_KEY}"));if(v&&v.t&&Date.now()-v.t<${THIRTY_DAYS_MS}){d.dataset.age="yes"}}catch(e){}})();`;
 
 export function AgeGate() {
+  const { t } = useI18n();
   // Starts open so the gate is part of the server-rendered page and covers the content
   // from the very first paint. Verified visitors are released as soon as the page loads.
   const [open, setOpen] = useState(true);
@@ -48,7 +50,7 @@ export function AgeGate() {
 
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key !== "Tab" || !dialogRef.current) return;
-    const focusables = dialogRef.current.querySelectorAll<HTMLElement>("button, [href], input, [tabindex]:not([tabindex='-1'])");
+    const focusables = dialogRef.current.querySelectorAll<HTMLElement>("button, [href], input, select, [tabindex]:not([tabindex='-1'])");
     if (!focusables.length) return;
     const first = focusables[0]!;
     const last = focusables[focusables.length - 1]!;
@@ -73,21 +75,21 @@ export function AgeGate() {
         className="glass w-full max-w-lg p-10 text-center"
         onKeyDown={onKeyDown}
       >
-        <p className="eyebrow">Restricted Access</p>
-        <h2 id="age-gate-title" className="mt-4 text-5xl">Adults Only (18+)</h2>
+        <p className="eyebrow">{t("Restricted Access")}</p>
+        <h2 id="age-gate-title" className="mt-4 text-5xl">{t("Adults Only (18+)")}</h2>
         <div className="gold-rule my-6" />
         <p id="age-gate-desc" className="text-sm leading-relaxed text-muted-foreground">
-          This site contains mature themes intended for adults. Please confirm you are at least 18 years of age
-          (or of legal age in your jurisdiction) to proceed.
+          {t("This site contains mature themes intended for adults. Please confirm you are at least 18 years of age (or of legal age in your jurisdiction) to proceed.")}
         </p>
         <div className="mt-8 flex flex-col gap-3">
           <button ref={enterRef} type="button" className="btn-crimson" onClick={confirmAge}>
-            I Am 18 or Older — Enter
+            {t("I Am 18 or Older — Enter")}
           </button>
           <button type="button" className="btn-gold" onClick={() => (window.location.href = "https://www.google.com")}>
-            Exit / Leave
+            {t("Exit / Leave")}
           </button>
         </div>
+        <PrefsSwitcher className="mt-6 justify-center" />
       </div>
     </div>
   );
