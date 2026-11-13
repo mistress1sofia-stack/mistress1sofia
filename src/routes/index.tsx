@@ -36,7 +36,7 @@ type Faq = { q: string; a: string; vars?: Record<string, string | number> };
 const faqKeys: Faq[] = [
   { q: "What is the difference between applying to serve and booking a session?", a: "A session is a single, paid private appointment. Applying to serve is a request for long-term ownership and training — highly selective, screened carefully, and never guaranteed." },
   { q: "What are the session rates?", a: "1 hour: {a}  ·  1.5 hours: {b}  ·  Overnight (in person): {c}. Custom durations may be arranged." },
-  { q: "Is a deposit or tribute required?", a: "Yes. A mandatory 50% deposit secures any session. Applications for consideration require a {min} minimum administrative tribute." },
+  { q: "Is a deposit or tribute required?", a: "Yes. A mandatory 50% deposit secures any session. Applications for consideration include an administrative tribute, a demonstration of your seriousness and respect. The more generous and respectful the offering, the more seriously your application will be considered." },
   { q: "How does the screening / application process work?", a: "Complete the relevant form honestly and in full. I review every submission personally. If you are deemed suitable, you will be contacted discreetly with next steps." },
   { q: "Do you accept beginners?", a: "Yes. New submissives will find My maturity guiding — but never soft. Honesty about your experience is required." },
   { q: "Where do sessions take place?", a: "In a private, discreet dungeon, a vetted hotel, or online via an agreed platform." },
