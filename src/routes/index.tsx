@@ -76,7 +76,6 @@ function Index() {
       {/* About */}
       <section id="about" className="scroll-mt-20 px-6 py-24">
         <div className="glass relative mx-auto max-w-3xl px-8 py-16 sm:px-16">
-          <span className="absolute left-6 top-2 font-serif text-8xl text-crimson">“</span>
           <p className="eyebrow text-center">{t("About")}</p>
           <h2 className="mt-4 text-center text-4xl sm:text-5xl">{t("I Do Not Suffer Fools")}</h2>
           <div className="gold-rule my-8" />
@@ -86,7 +85,6 @@ function Index() {
             <p>{t("I am at My best with a cane in My hand or a slave beneath My boots. I will push limits, enforce standards, and demand excellence.")}</p>
             <p>{t("New submissives may find My maturity guiding, but never soft. I expect those who serve Me to be tested and refined.")}</p>
           </div>
-          <span className="absolute bottom-0 right-6 font-serif text-8xl text-crimson">”</span>
         </div>
       </section>
 
