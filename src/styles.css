@@ -148,3 +148,35 @@ html[data-age="yes"] .age-gate { display: none; }
 @utility vignette {
   background: var(--gradient-vignette);
 }
+
+/* ==== Polish pass: spacing, hierarchy and mobile comfort (appended; safe to remove as one block) ==== */
+
+@layer base {
+  /* Never allow sideways scrolling on a phone (clip, unlike hidden, keeps the sticky header working). */
+  body { overflow-x: clip; }
+  /* Headings break into balanced lines; paragraphs avoid a single lonely word on the last line. */
+  h1, h2, h3 { text-wrap: balance; }
+  p, li, dd { text-wrap: pretty; }
+  h1 { letter-spacing: -0.01em; }
+  h2 { line-height: 1.1; }
+  /* Slightly roomier reading rhythm for plain paragraphs (any paragraph with its own leading-* class is unaffected). */
+  main p { line-height: 1.75; }
+  /* Bigger tap area for menu and footer links without changing how they look. */
+  footer a, header nav a { padding-block: 0.3rem; }
+}
+
+/* Buttons: comfortable 44px touch height and a subtle lift on hover. */
+.btn-crimson, .btn-gold { min-height: 2.75rem; }
+.btn-crimson:hover, .btn-gold:hover { transform: translateY(-1px); }
+
+/* Cards and panels get a little depth so they stand apart from the page. */
+.glass {
+  box-shadow: inset 0 1px 0 oklch(0.76 0.09 80 / 14%), 0 28px 56px -32px oklch(0 0 0 / 70%);
+}
+
+/* iPhones zoom the page whenever a field with text smaller than 16px is tapped. Keep fields at 16px on phones. */
+@media (max-width: 48rem) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea { font-size: 16px; }
+}
