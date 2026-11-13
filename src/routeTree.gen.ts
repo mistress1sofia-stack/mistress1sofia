@@ -14,10 +14,12 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedGalleryManageRouteImport } from './routes/_authenticated/gallery-manage'
 import { Route as ApiPublicCronPurgeStaleRouteImport } from './routes/api/public/cron/purge-stale'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
@@ -45,6 +47,11 @@ const BookRoute = BookRouteImport.update({
   path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -65,6 +72,12 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedGalleryManageRoute =
+  AuthenticatedGalleryManageRouteImport.update({
+    id: '/gallery-manage',
+    path: '/gallery-manage',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicCronPurgeStaleRoute = ApiPublicCronPurgeStaleRouteImport.update({
   id: '/api/public/cron/purge-stale',
   path: '/api/public/cron/purge-stale',
@@ -82,10 +95,12 @@ export interface FileRoutesByFullPath {
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -94,10 +109,12 @@ export interface FileRoutesByTo {
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -108,10 +125,12 @@ export interface FileRoutesById {
   '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -122,10 +141,12 @@ export interface FileRouteTypes {
     | '/apply'
     | '/auth'
     | '/book'
+    | '/gallery'
     | '/privacy'
     | '/reset-password'
     | '/sitemap.xml'
     | '/admin'
+    | '/gallery-manage'
     | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
@@ -134,10 +155,12 @@ export interface FileRouteTypes {
     | '/apply'
     | '/auth'
     | '/book'
+    | '/gallery'
     | '/privacy'
     | '/reset-password'
     | '/sitemap.xml'
     | '/admin'
+    | '/gallery-manage'
     | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   id:
@@ -147,10 +170,12 @@ export interface FileRouteTypes {
     | '/apply'
     | '/auth'
     | '/book'
+    | '/gallery'
     | '/privacy'
     | '/reset-password'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/_authenticated/gallery-manage'
     | '/api/public/cron/purge-stale'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
@@ -161,6 +186,7 @@ export interface RootRouteChildren {
   ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
+  GalleryRoute: typeof GalleryRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -205,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -233,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/gallery-manage': {
+      id: '/_authenticated/gallery-manage'
+      path: '/gallery-manage'
+      fullPath: '/gallery-manage'
+      preLoaderRoute: typeof AuthenticatedGalleryManageRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/cron/purge-stale': {
       id: '/api/public/cron/purge-stale'
       path: '/api/public/cron/purge-stale'
@@ -252,10 +292,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedGalleryManageRoute: typeof AuthenticatedGalleryManageRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedGalleryManageRoute: AuthenticatedGalleryManageRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -267,6 +309,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
+  GalleryRoute: GalleryRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
