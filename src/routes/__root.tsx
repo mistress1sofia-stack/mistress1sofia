@@ -16,22 +16,24 @@ import { AgeGate, AGE_GATE_SCRIPT } from "@/components/site/AgeGate";
 import { Header, Footer } from "@/components/site/Chrome";
 import { supabase } from "@/integrations/supabase/client";
 import { isModuleLoadError, recoverModuleLoad } from '@/lib/module-recovery';
+import { PrefsProvider, useI18n } from "@/lib/i18n";
 
 const SITE_URL = "https://mistresssofia.site";
 const SITE_DESCRIPTION =
   "Mistress Sofia, a mature, sensual and sadistic professional Dominatrix. Private sessions and selective long-term service. 18+ only.";
 
 function NotFoundComponent() {
+  const { t } = useI18n();
   return (
     <section className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-6 py-24 text-center">
-      <p className="eyebrow">Error 404</p>
-      <h1 className="mt-4 text-5xl sm:text-6xl">Page not found</h1>
+      <p className="eyebrow">{t("Error 404")}</p>
+      <h1 className="mt-4 text-5xl sm:text-6xl">{t("Page not found")}</h1>
       <div className="gold-rule my-8 w-full max-w-xs" />
       <p className="text-sm leading-relaxed text-muted-foreground">
-        The page you are looking for does not exist or has been moved.
+        {t("The page you are looking for does not exist or has been moved.")}
       </p>
       <Link to="/" className="btn-crimson mt-10">
-        Go home
+        {t("Go home")}
       </Link>
     </section>
   );
@@ -157,11 +159,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <AgeGate />
-      <Header />
-      <main><Outlet /></main>
-      <Footer />
+      <PrefsProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <AgeGate />
+        <Header />
+        <main><Outlet /></main>
+        <Footer />
+      </PrefsProvider>
     </QueryClientProvider>
   );
 }
