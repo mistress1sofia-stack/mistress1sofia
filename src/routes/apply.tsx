@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { saveSubmission } from "@/lib/submit";
+import { useI18n } from "@/lib/i18n";
+import { TRIBUTE_MIN } from "@/lib/pricing";
 import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPicker, PrivacyNote, SensitiveConsentCheckbox, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
 
 export const Route = createFileRoute("/apply")({
@@ -20,7 +22,6 @@ export const Route = createFileRoute("/apply")({
   component: Apply,
 });
 
-const TRIBUTE_WORDING = "A minimum £100 administrative tribute applies only if you are found suitable. Nothing is paid through this site; payment is arranged privately after acceptance.";
 const STEPS = ["Introduction", "Personal Details", "Background", "Tribute", "Commitment", "Review"];
 const DRAFT_KEY = "ms-apply-draft";
 type F = Partial<Record<"name"|"pet"|"email"|"phone"|"age"|"city"|"sex"|"marital"|"height"|"weight"|"education"|"occupation"|"amount"|"why"|"pay"|"obey"|"ack"|"consent"|"sensitiveConsent", string>>;
@@ -29,11 +30,13 @@ type K = keyof F;
 const REVIEW_GROUPS: { step: number; title: string; fields: [K, string][] }[] = [
   { step: 1, title: "Personal Details", fields: [["name", "Full Name"], ["pet", "Pet Name"], ["email", "Email"], ["phone", "Phone"], ["age", "Age"], ["city", "City / Country"], ["sex", "Sex"], ["marital", "Marital Status"], ["height", "Height"], ["weight", "Weight"]] },
   { step: 2, title: "Background", fields: [["education", "Education"], ["occupation", "Occupation"]] },
-  { step: 3, title: "Tribute", fields: [["amount", "Tribute Amount (£)"], ["pay", "Payment Method"]] },
+  { step: 3, title: "Tribute", fields: [["amount", "Tribute Amount ({sym})"], ["pay", "Payment Method"]] },
   { step: 4, title: "Commitment", fields: [["why", "Why you seek to serve"]] },
 ];
 
 function Apply() {
+  const { t, money, symbol, currency, lang } = useI18n();
+  const tributeWording = t("A minimum {min} administrative tribute applies only if you are found suitable. Nothing is paid through this site; payment is arranged privately after acceptance.", { min: money(TRIBUTE_MIN) });
   const [step, setStep] = useState(0);
   const [f, setF] = useState<F>({});
   const [pay, setPay] = useState<PayMethod | "">("");
@@ -74,33 +77,33 @@ function Apply() {
   const sel = (k: K, label: string, opts: string[]) => (
     <Field label={label} error={err[k]}>
       <select className="field" value={f[k] ?? ""} onChange={set(k)} data-invalid={err[k] ? true : undefined} aria-invalid={err[k] ? true : undefined}>
-        <option value="">Select…</option>
-        {opts.map((o) => <option key={o}>{o}</option>)}
+        <option value="">{t("Select…")}</option>
+        {opts.map((o) => <option key={o} value={o}>{t(o)}</option>)}
       </select>
     </Field>
   );
 
   function validate() {
     const e: F = {};
-    const req = (k: K) => { if (!f[k]?.trim()) e[k] = "Required"; };
+    const req = (k: K) => { if (!f[k]?.trim()) e[k] = t("Required"); };
     if (step === 1) {
       (["name", "email", "phone", "age", "city", "sex"] as K[]).forEach(req);
-      if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email";
-      if (f.age && Number(f.age) < 18) e.age = "You must be 18 or older";
+      if (f.email && !/^\S+@\S+\.\S+$/.test(f.email)) e.email = t("Enter a valid email");
+      if (f.age && Number(f.age) < 18) e.age = t("You must be 18 or older");
     }
     if (step === 2) (["occupation"] as K[]).forEach(req);
     if (step === 3) {
-      if (!f.amount || Number(f.amount) < 100) e.amount = "Minimum tribute is £100";
-      if (!pay) e.pay = "Select a payment method";
+      if (!f.amount || Number(f.amount) < TRIBUTE_MIN) e.amount = t("Minimum tribute is {min}", { min: money(TRIBUTE_MIN) });
+      if (!pay) e.pay = t("Select a payment method");
     }
     if (step === 4) {
-      if (!obey) e.obey = "Required";
-      if (!f.why || f.why.trim().length < 30) e.why = "Please write at least a few sentences";
-      if (!ack) e.ack = "Required";
+      if (!obey) e.obey = t("Required");
+      if (!f.why || f.why.trim().length < 30) e.why = t("Please write at least a few sentences");
+      if (!ack) e.ack = t("Required");
     }
     if (step === 5) {
-      if (!consent) e.consent = "Consent is required to submit";
-      if (!sensitive) e.sensitiveConsent = "Consent is required to submit";
+      if (!consent) e.consent = t("Consent is required to submit");
+      if (!sensitive) e.sensitiveConsent = t("Consent is required to submit");
     }
     setErr(e);
     if (Object.keys(e).length) {
@@ -113,12 +116,12 @@ function Apply() {
   function submit() {
     setSending(true);
     setSubmitError("");
-    saveSubmission("applications", { ...f, pay, obey, ack, consent, sensitiveConsent: sensitive }, { website: honeypot, elapsedMs: Date.now() - startedAt })
+    saveSubmission("applications", { ...f, currency, lang, pay, obey, ack, consent, sensitiveConsent: sensitive }, { website: honeypot, elapsedMs: Date.now() - startedAt })
       .then((result) => {
         try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
         setRefId(result.reference); window.scrollTo(0, 0);
       })
-      .catch((error) => setSubmitError(error instanceof Error && error.message ? error.message : "Your application could not be sent. Your answers are still here — please try again."))
+      .catch((error) => setSubmitError(error instanceof Error && error.message ? error.message : t("Your application could not be sent. Your answers are still here — please try again.")))
       .finally(() => setSending(false));
   }
 
@@ -130,13 +133,12 @@ function Apply() {
 
   return (
     <section className="mx-auto max-w-2xl px-6 py-16">
-      <p className="eyebrow">Long-Term Service</p>
-      <h1 className="mt-4 text-5xl">Apply for Consideration</h1>
+      <p className="eyebrow">{t("Long-Term Service")}</p>
+      <h1 className="mt-4 text-5xl">{t("Apply for Consideration")}</h1>
       <div className="gold-rule my-10" />
       {refId ? (
         <Confirmation title="Your Application Has Been Received" refId={refId}>
-          Keep this reference. This confirms receipt only — not acceptance. If you are found suitable, you will be
-          contacted privately with next steps, including how the £100 administrative tribute is arranged. Do not chase.
+          {t("Keep this reference. This confirms receipt only — not acceptance. If you are found suitable, you will be contacted privately with next steps, including how the {min} administrative tribute is arranged. Do not chase.", { min: money(TRIBUTE_MIN) })}
         </Confirmation>
       ) : (
         <div className="relative glass p-6 sm:p-10">
@@ -145,10 +147,10 @@ function Apply() {
           <div className="space-y-6">
             {step === 0 && (
               <div className="space-y-5 font-serif text-lg leading-relaxed">
-                <p>Service to Me is a privilege, not a transaction. I accept very few into long-term training.</p>
-                <p>I expect devotion, discipline, and absolute honesty. Every answer you give will be read by Me personally — falsehood ends your consideration immediately.</p>
-                <p className="text-muted-foreground">{TRIBUTE_WORDING}</p>
-                <p className="text-sm text-muted-foreground">Your progress is kept only in this browser tab.</p>
+                <p>{t("Service to Me is a privilege, not a transaction. I accept very few into long-term training.")}</p>
+                <p>{t("I expect devotion, discipline, and absolute honesty. Every answer you give will be read by Me personally — falsehood ends your consideration immediately.")}</p>
+                <p className="text-muted-foreground">{tributeWording}</p>
+                <p className="text-sm text-muted-foreground">{t("Your progress is kept only in this browser tab.")}</p>
               </div>
             )}
             {step === 1 && (
@@ -167,8 +169,8 @@ function Apply() {
             )}
             {step === 3 && (
               <div className="space-y-6">
-                <Field label="Tribute Amount (£, minimum 100)" error={err.amount} hint={TRIBUTE_WORDING}>
-                  <input type="number" min={100} className="field" value={f.amount ?? ""} onChange={set("amount")} data-invalid={err.amount ? true : undefined} aria-invalid={err.amount ? true : undefined} />
+                <Field label={t("Tribute Amount ({sym}, minimum 100)", { sym: symbol })} error={err.amount} hint={tributeWording}>
+                  <input type="number" min={TRIBUTE_MIN} className="field" value={f.amount ?? ""} onChange={set("amount")} data-invalid={err.amount ? true : undefined} aria-invalid={err.amount ? true : undefined} />
                 </Field>
                 <PaymentPicker value={pay} onChange={setPay} error={err.pay} />
               </div>
@@ -177,7 +179,7 @@ function Apply() {
               <div className="space-y-6">
                 <label className="flex items-start gap-3 text-sm">
                   <input type="checkbox" checked={obey} onChange={(e) => setObey(e.target.checked)} className="mt-1 accent-[var(--crimson)]" data-invalid={err.obey ? true : undefined} aria-invalid={err.obey ? true : undefined} />
-                  I am willing to offer 100% obedience to Mistress Sofia within negotiated limits.
+                  {t("I am willing to offer 100% obedience to Mistress Sofia within negotiated limits.")}
                 </label>
                 {err.obey && <p role="alert" className="text-xs text-danger">{err.obey}</p>}
                 <Field label="Why do you seek to serve Mistress Sofia?" error={err.why}>
@@ -185,7 +187,7 @@ function Apply() {
                 </Field>
                 <label className="flex items-start gap-3 text-sm">
                   <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} className="mt-1 accent-[var(--crimson)]" data-invalid={err.ack ? true : undefined} aria-invalid={err.ack ? true : undefined} />
-                  I formally acknowledge that all information provided is true, that I am over 18, and that submission does not guarantee acceptance.
+                  {t("I formally acknowledge that all information provided is true, that I am over 18, and that submission does not guarantee acceptance.")}
                 </label>
                 {err.ack && <p role="alert" className="text-xs text-danger">{err.ack}</p>}
               </div>
@@ -196,8 +198,8 @@ function Apply() {
                   {REVIEW_GROUPS.map((group) => (
                     <div key={group.step} className="border border-border p-5">
                       <div className="mb-4 flex items-center justify-between gap-4">
-                        <p className="text-[0.65rem] uppercase tracking-[0.25em] text-gold">{group.title}</p>
-                        <button type="button" className="text-xs text-gold underline" onClick={() => { setStep(group.step); window.scrollTo(0, 0); }}>Edit</button>
+                        <p className="text-[0.65rem] uppercase tracking-[0.25em] text-gold">{t(group.title)}</p>
+                        <button type="button" className="text-xs text-gold underline" onClick={() => { setStep(group.step); window.scrollTo(0, 0); }}>{t("Edit")}</button>
                       </div>
                       <dl className="space-y-2 text-sm">
                         {group.fields.map(([key, label]) => {
@@ -205,12 +207,12 @@ function Apply() {
                           if (!value) return null;
                           return (
                             <div key={key} className="grid gap-1 sm:grid-cols-[160px_1fr]">
-                              <dt className="text-muted-foreground">{label}</dt>
-                              <dd className="break-words whitespace-pre-wrap">{value}</dd>
+                              <dt className="text-muted-foreground">{t(label, { sym: symbol })}</dt>
+                              <dd className="break-words whitespace-pre-wrap">{key === "pay" ? t(({ giftcard: "Gift Card", bitcoin: "Bitcoin", paypal: "PayPal" } as Record<string, string>)[value] ?? value) : t(value)}</dd>
                             </div>
                           );
                         })}
-                        {group.step === 4 && <div className="grid gap-1 sm:grid-cols-[160px_1fr]"><dt className="text-muted-foreground">Obedience & honesty</dt><dd>Confirmed</dd></div>}
+                        {group.step === 4 && <div className="grid gap-1 sm:grid-cols-[160px_1fr]"><dt className="text-muted-foreground">{t("Obedience & honesty")}</dt><dd>{t("Confirmed")}</dd></div>}
                       </dl>
                     </div>
                   ))}
