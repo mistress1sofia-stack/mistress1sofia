@@ -36,7 +36,7 @@ const REVIEW_GROUPS: { step: number; title: string; fields: [K, string][] }[] = 
 
 function Apply() {
   const { t, money, symbol, currency, lang } = useI18n();
-  const tributeWording = t("A minimum {min} administrative tribute applies only if you are found suitable. Nothing is paid through this site; payment is arranged privately after acceptance.", { min: money(TRIBUTE_MIN) });
+  const tributeWording = t("Nothing is paid through this site. Your offer is a pledge only. If you are found suitable, payment is arranged privately after acceptance.");
   const [step, setStep] = useState(0);
   const [f, setF] = useState<F>({});
   const [pay, setPay] = useState<PayMethod | "">("");
@@ -138,7 +138,7 @@ function Apply() {
       <div className="gold-rule my-10" />
       {refId ? (
         <Confirmation title="Your Application Has Been Received" refId={refId}>
-          {t("Keep this reference. This confirms receipt only — not acceptance. If you are found suitable, you will be contacted privately with next steps, including how the {min} administrative tribute is arranged. Do not chase.", { min: money(TRIBUTE_MIN) })}
+          {t("Keep this reference. This confirms receipt only — not acceptance. If you are found suitable, you will be contacted privately with next steps, including how your administrative tribute is arranged. Do not chase.")}
         </Confirmation>
       ) : (
         <div className="relative glass p-6 sm:p-10">
@@ -169,7 +169,24 @@ function Apply() {
             )}
             {step === 3 && (
               <div className="space-y-6">
-                <Field label={t("Tribute Amount ({sym}, minimum 100)", { sym: symbol })} error={err.amount} hint={tributeWording}>
+                <div className="space-y-4 border border-crimson bg-oxblood/40 p-5 shadow-[var(--glow-crimson)]">
+                  <p className="eyebrow">{t("An Offering of Respect")}</p>
+                  <p className="font-serif text-lg leading-relaxed">{t("The administrative tribute is not a fee. It is your first demonstration of seriousness, respect, and an understanding of your place.")}</p>
+                  <p className="text-sm leading-relaxed">{t("A serious submissive does not offer the least he can. The higher and more respectful the tribute you offer, the more seriously your application will be considered, and the faster it may be reviewed. Weak offerings are not prioritised.")}</p>
+                  <p className="text-sm font-medium leading-relaxed text-gold">{t("A strong offering shows a true understanding of your place and a genuine desire to serve. Choose an amount that proves it.")}</p>
+                </div>
+                <div>
+                  <span className="mb-3 block text-[0.65rem] uppercase tracking-[0.25em] text-gold">{t("Suggested offerings")}</span>
+                  <div className="flex flex-wrap gap-3">
+                    {[200, 300, 500, 1000].map((n) => (
+                      <button type="button" key={n} aria-pressed={f.amount === String(n)} onClick={() => setF({ ...f, amount: String(n) })}
+                        className={`border px-4 py-2 text-sm transition ${f.amount === String(n) ? "border-crimson bg-oxblood/40 shadow-[var(--glow-crimson)]" : "border-input hover:border-gold-soft"}`}>
+                        {money(n)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <Field label={t("Tribute Amount ({sym})", { sym: symbol })} error={err.amount} hint={tributeWording}>
                   <input type="number" min={TRIBUTE_MIN} className="field" value={f.amount ?? ""} onChange={set("amount")} data-invalid={err.amount ? true : undefined} aria-invalid={err.amount ? true : undefined} />
                 </Field>
                 <PaymentPicker value={pay} onChange={setPay} error={err.pay} />
