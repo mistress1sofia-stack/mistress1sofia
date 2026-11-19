@@ -17,12 +17,12 @@ function OwnerRequest({ reference = 'New request', kind = 'request' }: Props) {
   );
 }
 export const applicationTemplate = {
-  component: OwnerRequest, subject: 'New application — Mistress Sofia',
+  component: OwnerRequest, subject: (d: Record<string, any>) => `New application ${d['reference'] ?? ''} — Mistress Sofia`.replace('  ', ' '),
   displayName: 'Owner: new application', to: OWNER_EMAIL,
   previewData: { reference: 'MS-APP-PREVIEW', kind: 'application' },
 } satisfies TemplateEntry;
 export const bookingTemplate = {
-  component: OwnerRequest, subject: 'New booking request — Mistress Sofia',
+  component: OwnerRequest, subject: (d: Record<string, any>) => `New booking request ${d['reference'] ?? ''} — Mistress Sofia`.replace('  ', ' '),
   displayName: 'Owner: new booking request', to: OWNER_EMAIL,
   previewData: { reference: 'MS-BKG-PREVIEW', kind: 'booking request' },
 } satisfies TemplateEntry;
