@@ -7,6 +7,7 @@ const links = [
   { label: "Offerings", href: "/#offerings" },
   { label: "Gallery", href: "/gallery" },
   { label: "Quiz", href: "/quiz" },
+  { label: "Rules", href: "/protocol" },
   { label: "Boundaries", href: "/#boundaries" },
   { label: "Protocol & FAQ", href: "/#protocol" },
 ];
