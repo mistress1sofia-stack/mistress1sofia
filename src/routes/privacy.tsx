@@ -61,7 +61,7 @@ function Privacy() {
         <div>
           <h2 className="text-2xl text-gold">{t("What this site stores in your browser")}</h2>
           <p className="mt-4">
-            {t("Your confirmation that you are an adult (for 30 days), and your language and currency choice, are remembered in your browser so you are not asked on every visit. While you complete a form, your progress is kept only in that browser tab and is cleared when you submit or close the tab. Nothing else is stored.")}
+            {t("Your confirmation that you are an adult (for 30 days), and your language and currency choice, are remembered in your browser so you are not asked on every visit. While you complete a form, your progress is kept only in that browser tab and is cleared when you submit or close the tab. If you tell us how you found this site, that answer is also kept only in that tab until you submit a form. Nothing else is stored.")}
           </p>
         </div>
         <div>
