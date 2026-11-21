@@ -1,4 +1,5 @@
 # Tasks
+- [ ] Finish Google Search Console verification and submit the published site's existing sitemap.
 - [x] Targeted visual finishing pass: six public pages, six widths, three languages, age gate open/closed; preserve wording and behaviour.
 - [x] Verify private inbox using the owner's signed-in account.
 - [x] Professional audit & polish (uploaded brief).

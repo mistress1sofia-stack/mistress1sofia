@@ -89,6 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "google-site-verification", content: "hj93mLPxXT4p766EJiZDxQu8RlV23NBQBP0sgYb637M" },
       { title: "Mistress Sofia — Professional Dominatrix" },
       { name: "description", content: SITE_DESCRIPTION },
       { name: "author", content: "Mistress Sofia" },
