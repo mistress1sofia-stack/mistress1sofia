@@ -263,6 +263,12 @@ const D: Record<string, [string, string]> = {
   "Photo viewer": ["Fotobetrachter", "Visionneuse de photos"],
   "Previous photo": ["Vorheriges Foto", "Photo précédente"],
   "Next photo": ["Nächstes Foto", "Photo suivante"],
+  // ---- "How did you find me?"
+  "How did you find me? (optional)": ["Wie haben Sie mich gefunden? (optional)", "Comment m'avez-vous trouvée ? (facultatif)"],
+  "A search engine (Google, Bing)": ["Eine Suchmaschine (Google, Bing)", "Un moteur de recherche (Google, Bing)"],
+  "A directory or listing site": ["Ein Verzeichnis oder eine Listing-Seite", "Un annuaire ou un site de référencement"],
+  "The quiz on this site": ["Das Quiz auf dieser Website", "Le quiz de ce site"],
+  "A friend or referral": ["Ein Freund oder eine Empfehlung", "Un ami ou une recommandation"],
   // ---- Not found
   "Error 404": ["Fehler 404", "Erreur 404"],
   "Page not found": ["Seite nicht gefunden", "Page introuvable"],
