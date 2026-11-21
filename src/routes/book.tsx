@@ -167,7 +167,7 @@ function Book() {
               <div className="space-y-5 font-serif text-lg leading-relaxed">
                 <p>{t("A private session is time spent entirely under My control. Arrive punctual, clean, and honest.")}</p>
                 <p>{t("Limits are discussed before we begin and respected absolutely. Everything else is Mine to decide.")}</p>
-                <p className="text-muted-foreground">{t("Rates: 1 hour {a} · 1.5 hours {b} · Overnight (in person only) {c}. A 50% deposit secures your booking, arranged privately once your request is accepted — nothing is paid through this site.", { a: money(140), b: money(200), c: money(600) })}</p>
+                <p className="text-muted-foreground">{t("Rates: 1 hour {a} · 1.5 hours {b} · Overnight (in person only, 10 hours) {c}. A 50% deposit secures your booking, arranged privately once your request is accepted — nothing is paid through this site.", { a: money(140), b: money(200), c: money(600) })}</p>
                 <p className="text-sm text-muted-foreground">{t("Your progress is kept only in this browser tab.")}</p>
               </div>
             )}
@@ -185,7 +185,7 @@ function Book() {
                     {[["1h", "1 Hour", money(140)], ["1.5h", "1.5 Hours", money(200)], ["overnight", "Overnight", money(600)], ["custom", "Custom Hours", t("{p}/hr", { p: money(CUSTOM_HOURLY) })]].filter(([id]) => !(f.type === "Online" && id === "overnight")).map(([id, l, p]) => (
                       <button type="button" key={id} aria-pressed={f.duration === id} onClick={() => setF({ ...f, duration: id ?? "1h" })}
                         className={`flex justify-between border px-4 py-3 text-sm transition ${f.duration === id ? "border-crimson bg-oxblood/40 shadow-[var(--glow-crimson)]" : "border-input hover:border-gold-soft"}`}>
-                        <span>{t(l ?? "")}</span><span className="text-gold">{p}</span>
+                        <span>{t(l ?? "")}{id === "overnight" ? ` (${t("10 hours")})` : ""}</span><span className="text-gold">{p}</span>
                       </button>
                     ))}
                   </div>
