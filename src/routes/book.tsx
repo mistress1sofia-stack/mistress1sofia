@@ -4,6 +4,7 @@ import { saveSubmission } from "@/lib/submit";
 import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPicker, PrivacyNote, SensitiveConsentCheckbox, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
 import { sessionPrice, CUSTOM_HOURLY } from "@/lib/pricing";
 import { useI18n } from "@/lib/i18n";
+import { SourceField } from "@/components/site/SourceField";
 
 export const Route = createFileRoute("/book")({
   staticData: { sitemap: true },
@@ -172,7 +173,7 @@ function Book() {
             )}
             {step === 1 && (
               <div className="grid gap-5 sm:grid-cols-2">
-                {inp("name", "Full Name")}{inp("pet", "Pet Name")}{inp("email", "Email", "email")}{inp("phone", "Contact Number", "tel")}{inp("age", "Age", "number")}{inp("location", "Location")}
+                {inp("name", "Full Name")}{inp("pet", "Pet Name")}{inp("email", "Email", "email")}{inp("phone", "Contact Number", "tel")}{inp("age", "Age", "number")}{inp("location", "Location")}<div className="sm:col-span-2"><SourceField /></div>
               </div>
             )}
             {step === 2 && (
