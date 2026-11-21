@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { saveSubmission } from "@/lib/submit";
 import { useI18n } from "@/lib/i18n";
+import { SourceField } from "@/components/site/SourceField";
 import { TRIBUTE_MIN } from "@/lib/pricing";
 import { Confirmation, ConsentCheckbox, Field, Honeypot, NavButtons, PaymentPicker, PrivacyNote, SensitiveConsentCheckbox, Steps, SubmitError, type PayMethod } from "@/components/site/FormKit";
 
@@ -160,6 +161,7 @@ function Apply() {
                 {sel("sex", "Sex", ["Male", "Female", "Non-binary", "Other"])}
                 {sel("marital", "Marital Status (optional)", ["Single", "In a relationship", "Married", "Divorced", "Other", "Prefer not to say"])}
                 {inp("height", "Height (optional)")}{inp("weight", "Weight (optional)")}
+                <div className="sm:col-span-2"><SourceField /></div>
               </div>
             )}
             {step === 2 && (
