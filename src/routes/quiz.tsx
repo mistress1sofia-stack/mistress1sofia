@@ -196,6 +196,12 @@ function Quiz() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const done = level !== null;
 
+  // Remember (this tab only) that the visitor came through the quiz, so the forms can pre-fill "How did you find me?".
+  useEffect(() => {
+    if (!done) return;
+    try { if (!sessionStorage.getItem("ms-source")) sessionStorage.setItem("ms-source", "The quiz on this site"); } catch { /* storage blocked */ }
+  }, [done]);
+
   // Move focus to the new question or result so keyboard and screen-reader users follow along.
   useEffect(() => { if (started) headingRef.current?.focus(); }, [started, step, done]);
 
