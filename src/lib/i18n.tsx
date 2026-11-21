@@ -256,6 +256,7 @@ const D: Record<string, [string, string]> = {
   // ---- Gallery
   "Gallery": ["Galerie", "Galerie"],
   "Rules": ["Regeln", "Règles"],
+  "Terms": ["Bedingungen", "Conditions"],
   "A Glimpse of the Experience": ["Ein Einblick in das Erlebnis", "Un aperçu de l'expérience"],
   "Loading…": ["Wird geladen…", "Chargement…"],
   "The gallery could not be loaded. Please try again later.": ["Die Galerie konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", "La galerie n'a pas pu être chargée. Veuillez réessayer plus tard."],
