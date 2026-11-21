@@ -54,17 +54,17 @@ const SECTIONS: { title: Tx; text: Tx }[] = [
   {
     title: { en: "Deposits and payment", de: "Anzahlungen und Zahlung", fr: "Acomptes et paiement" },
     text: {
-      en: "Nothing is paid through this website. If I accept your request, I will send private payment instructions. A deposit may be required to secure your time, and it must be received by the deadline I give you, or the time is released.",
-      de: "Über diese Website wird nichts bezahlt. Wenn Ich Ihre Anfrage annehme, sende Ich Ihnen private Zahlungsanweisungen. Zur Sicherung Ihres Termins kann eine Anzahlung verlangt werden; sie muss bis zu der von Mir genannten Frist eingehen, sonst wird der Termin freigegeben.",
-      fr: "Rien n'est payé via ce site. Si J'accepte votre demande, Je vous enverrai des instructions de paiement privées. Un acompte peut être exigé pour réserver votre créneau et doit être reçu avant l'échéance que Je fixe, faute de quoi le créneau est libéré.",
+      en: "Nothing is paid through this website. If I accept your request, I will send private payment instructions. A deposit may be required to secure your time, and it must be received by the deadline I give you, or the time is released. A deposit secures a booked session; a tribute is the pledge made with an application.",
+      de: "Über diese Website wird nichts bezahlt. Wenn Ich Ihre Anfrage annehme, sende Ich Ihnen private Zahlungsanweisungen. Zur Sicherung Ihres Termins kann eine Anzahlung verlangt werden; sie muss bis zu der von Mir genannten Frist eingehen, sonst wird der Termin freigegeben. Eine Anzahlung sichert eine gebuchte Session; ein Tribut ist das Versprechen, das mit einer Bewerbung abgegeben wird.",
+      fr: "Rien n'est payé via ce site. Si J'accepte votre demande, Je vous enverrai des instructions de paiement privées. Un acompte peut être exigé pour réserver votre créneau et doit être reçu avant l'échéance que Je fixe, faute de quoi le créneau est libéré. Un acompte garantit une séance réservée ; un tribut est l'engagement pris avec une candidature.",
     },
   },
   {
     title: { en: "Cancellations", de: "Stornierungen", fr: "Annulations" },
     text: {
-      en: `Give at least ${NOTICE_HOURS} hours' notice to cancel or reschedule. With proper notice, a deposit may be moved to a new date once, at My discretion. Later than that, the deposit is forfeited.`,
-      de: `Stornierungen oder Verschiebungen sind mindestens ${NOTICE_HOURS} Stunden vorher mitzuteilen. Bei rechtzeitiger Mitteilung kann eine Anzahlung nach Meinem Ermessen einmal auf einen neuen Termin übertragen werden. Bei späterer Absage verfällt die Anzahlung.`,
-      fr: `Prévenez au moins ${NOTICE_HOURS} heures à l'avance pour annuler ou reporter. Avec un préavis suffisant, un acompte peut être reporté une fois sur une nouvelle date, à Ma discrétion. Au-delà, l'acompte est perdu.`,
+      en: `Give at least ${NOTICE_HOURS} hours' notice to cancel or reschedule. With proper notice, a deposit may be moved to a new date once, at My discretion. With less notice than this, the deposit is forfeited.`,
+      de: `Stornierungen oder Verschiebungen sind mindestens ${NOTICE_HOURS} Stunden vorher mitzuteilen. Bei rechtzeitiger Mitteilung kann eine Anzahlung nach Meinem Ermessen einmal auf einen neuen Termin übertragen werden. Bei kürzerer Vorankündigung verfällt die Anzahlung.`,
+      fr: `Prévenez au moins ${NOTICE_HOURS} heures à l'avance pour annuler ou reporter. Avec un préavis suffisant, un acompte peut être reporté une fois sur une nouvelle date, à Ma discrétion. Avec un préavis plus court, l'acompte est perdu.`,
     },
   },
   {
