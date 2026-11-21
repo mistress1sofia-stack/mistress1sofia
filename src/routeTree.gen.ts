@@ -16,8 +16,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProtocolRouteImport } from './routes/protocol'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedGalleryManageRouteImport } from './routes/_authenticated/gallery-manage'
 import { Route as ApiPublicCronPurgeStaleRouteImport } from './routes/api/public/cron/purge-stale'
@@ -59,6 +62,16 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtocolRoute = ProtocolRouteImport.update({
+  id: '/protocol',
+  path: '/protocol',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -67,6 +80,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -109,8 +127,11 @@ export interface FileRoutesByFullPath {
   '/book': typeof BookRoute
   '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
+  '/protocol': typeof ProtocolRoute
+  '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
@@ -125,8 +146,11 @@ export interface FileRoutesByTo {
   '/book': typeof BookRoute
   '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
+  '/protocol': typeof ProtocolRoute
+  '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
@@ -143,8 +167,11 @@ export interface FileRoutesById {
   '/book': typeof BookRoute
   '/gallery': typeof GalleryRoute
   '/privacy': typeof PrivacyRoute
+  '/protocol': typeof ProtocolRoute
+  '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/gallery-manage': typeof AuthenticatedGalleryManageRoute
   '/api/public/cron/purge-stale': typeof ApiPublicCronPurgeStaleRoute
@@ -161,8 +188,11 @@ export interface FileRouteTypes {
     | '/book'
     | '/gallery'
     | '/privacy'
+    | '/protocol'
+    | '/quiz'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/terms'
     | '/admin'
     | '/gallery-manage'
     | '/api/public/cron/purge-stale'
@@ -177,8 +207,11 @@ export interface FileRouteTypes {
     | '/book'
     | '/gallery'
     | '/privacy'
+    | '/protocol'
+    | '/quiz'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/terms'
     | '/admin'
     | '/gallery-manage'
     | '/api/public/cron/purge-stale'
@@ -194,8 +227,11 @@ export interface FileRouteTypes {
     | '/book'
     | '/gallery'
     | '/privacy'
+    | '/protocol'
+    | '/quiz'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/terms'
     | '/_authenticated/admin'
     | '/_authenticated/gallery-manage'
     | '/api/public/cron/purge-stale'
@@ -212,8 +248,11 @@ export interface RootRouteChildren {
   BookRoute: typeof BookRoute
   GalleryRoute: typeof GalleryRoute
   PrivacyRoute: typeof PrivacyRoute
+  ProtocolRoute: typeof ProtocolRoute
+  QuizRoute: typeof QuizRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
   ApiPublicCronPurgeStaleRoute: typeof ApiPublicCronPurgeStaleRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
@@ -271,6 +310,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/protocol': {
+      id: '/protocol'
+      path: '/protocol'
+      fullPath: '/protocol'
+      preLoaderRoute: typeof ProtocolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -283,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -351,8 +411,11 @@ const rootRouteChildren: RootRouteChildren = {
   BookRoute: BookRoute,
   GalleryRoute: GalleryRoute,
   PrivacyRoute: PrivacyRoute,
+  ProtocolRoute: ProtocolRoute,
+  QuizRoute: QuizRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
   ApiPublicCronPurgeStaleRoute: ApiPublicCronPurgeStaleRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
