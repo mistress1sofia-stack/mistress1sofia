@@ -8,6 +8,7 @@ const links = [
   { label: "Gallery", href: "/gallery" },
   { label: "Quiz", href: "/quiz" },
   { label: "Rules", href: "/protocol" },
+  { label: "Terms", href: "/terms" },
   { label: "Boundaries", href: "/#boundaries" },
   { label: "Protocol & FAQ", href: "/#protocol" },
 ];
