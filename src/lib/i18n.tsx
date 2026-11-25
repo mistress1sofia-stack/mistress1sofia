@@ -259,6 +259,7 @@ const D: Record<string, [string, string]> = {
   "Gallery": ["Galerie", "Galerie"],
   "Rules": ["Regeln", "Règles"],
   "Terms": ["Bedingungen", "Conditions"],
+  "Shop": ["Shop", "Boutique"],
   "10 hours": ["10 Stunden", "10 heures"],
   "A Glimpse of the Experience": ["Ein Einblick in das Erlebnis", "Un aperçu de l'expérience"],
   "Loading…": ["Wird geladen…", "Chargement…"],
