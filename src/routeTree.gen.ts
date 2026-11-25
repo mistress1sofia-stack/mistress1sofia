@@ -19,6 +19,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -77,6 +78,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/protocol': typeof ProtocolRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/protocol': typeof ProtocolRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/protocol': typeof ProtocolRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/protocol'
     | '/quiz'
     | '/reset-password'
+    | '/shop'
     | '/sitemap.xml'
     | '/terms'
     | '/admin'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/protocol'
     | '/quiz'
     | '/reset-password'
+    | '/shop'
     | '/sitemap.xml'
     | '/terms'
     | '/admin'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/protocol'
     | '/quiz'
     | '/reset-password'
+    | '/shop'
     | '/sitemap.xml'
     | '/terms'
     | '/_authenticated/admin'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   ProtocolRoute: typeof ProtocolRoute
   QuizRoute: typeof QuizRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ShopRoute: typeof ShopRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiPublicCronPurgeStaleRoute: typeof ApiPublicCronPurgeStaleRoute
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -414,6 +434,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProtocolRoute: ProtocolRoute,
   QuizRoute: QuizRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ShopRoute: ShopRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiPublicCronPurgeStaleRoute: ApiPublicCronPurgeStaleRoute,
